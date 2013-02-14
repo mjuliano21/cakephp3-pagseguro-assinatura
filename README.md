@@ -18,9 +18,8 @@ Git:
     Submodulo: Na raiz de sua aplicação adicione como submodulo
         ```php git submodule add git@github.com:andrebian/cake-plugin-pagseguro.git app/Plugin/PagSeguro ```
 
----
-    Clone:  
-        ```php git clone git@github.com:andrebian/cake-plugin-pagseguro.git ```
+    Clonando:  
+        git clone git@github.com:andrebian/cake-plugin-pagseguro.git
         Altere o nome da pasta de `cake-plugin-pagseguro` para `PagSeguro` e cole-a na pasta `Plugin` de sua aplicação
 
 ---------------------------------------------------------------------------
