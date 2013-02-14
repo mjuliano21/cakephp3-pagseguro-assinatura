@@ -34,6 +34,7 @@ Em seguida no arquivo `Controller/AppController.php` ou no controller desejado d
 ```
 
 
+
 No controller que fará o processamento dos itens comprados pelo usuário basta seguir os passos abaixo
 
 ```php
@@ -61,6 +62,7 @@ No controller que fará o processamento dos itens comprados pelo usuário basta 
         $cont = 1;
         foreach($itensSelecionados as $itens) {
             $this->Carrinho->adicionarItem($cont, $itens['nomeProduto'], $itens['precoProduto'], $itens['precoProduto'], $itens['quantidadeProdto']);
+            $cont++;
         }
 
         // definindo o contato do comprador
