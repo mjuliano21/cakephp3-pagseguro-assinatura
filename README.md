@@ -61,7 +61,7 @@ No controller que fará o processamento dos itens comprados pelo usuário basta 
         // OPção 2:
         $cont = 1;
         foreach($itensSelecionados as $itens) {
-            $this->Carrinho->adicionarItem($cont, $itens['nomeProduto'], $itens['precoProduto'], $itens['precoProduto'], $itens['quantidadeProdto']);
+            $this->Carrinho->adicionarItem($cont, $itens['nomeProduto'], $itens['precoProduto'], $itens['precoProduto'], $itens['quantidadeProduto']);
             $cont++;
         }
 
@@ -83,4 +83,18 @@ No controller que fará o processamento dos itens comprados pelo usuário basta 
 
 # TODO
 
+## Pagamento
+Itens adicionais para compra como
+    * Valor extra
+    * MaxAge (validade da requisição)
+    * MaxUses (Quantidade de requisições para itens fixos)
+    * Retorno de status logo após a finalização da compra
+
+
+
+## Notificações
 Integração com notificações
+
+
+## Testes
+Criar testes

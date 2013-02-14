@@ -19,7 +19,6 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-App::uses('HttpSocket', 'Network/Http');
 App::uses('PagSeguroLibrary', 'Plugin/PagSeguro/Vendor/PagSeguroLibrary');
 
 class CarrinhoComponent extends Component{
@@ -44,7 +43,7 @@ class CarrinhoComponent extends Component{
         
         
         // definindo alguns dados padrões
-        $this->montaPagamento->setShippingType('3');
+        //$this->montaPagamento->setShippingType('3');
         $this->montaPagamento->setCurrency('BRL');
                
         parent::startup($Controller);
@@ -135,8 +134,13 @@ class CarrinhoComponent extends Component{
   * @return boolean
   */   
     public function finalizaCompra() {
-        if ($url = $this->montaPagamento->register($this->credenciais) ) {
-            return $url;
+        try {
+            if ($url = $this->montaPagamento->register($this->credenciais) ) {
+                return $url;
+            }
+        } catch (PagSeguroServiceException $e) {
+            echo $e->getMessage();
+            exit();
         }
     }
     
