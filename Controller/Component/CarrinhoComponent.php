@@ -52,7 +52,7 @@ class CarrinhoComponent extends Component{
         $this->montaPagamento->setShippingType('3');
         $this->montaPagamento->setCurrency('BRL');
                
-        parent::startup($Controller);
+        //parent::startup($Controller);
     }
   
     
