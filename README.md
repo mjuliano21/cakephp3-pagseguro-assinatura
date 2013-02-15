@@ -51,7 +51,7 @@ No controller que fará o processamento dos itens comprados pelo usuário basta 
         // definindo a URL de retorno ao realizar o pagamento (opcional)
         $this->Carrinho->setUrlRetorno('http://andrebian.com');
 
-        // definindo a referência da compra (obrigatório)
+        // definindo a referência da compra (opcional)
         $this->Carrinho->setReferencia(25);
 
         // para adicionar apenas 1 item:
