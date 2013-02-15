@@ -40,8 +40,10 @@ Em seguida no arquivo `Controller/AppController.php` ou no controller desejado d
 ```
 
 
+Para a realização de uma requisição simples, contendo somente os dados do comprador, 
+meio de entrega não definido, não definido tipo de pagamento e valores adicionais siga o modelo abaixo.
 
-No controller que fará o processamento dos itens comprados pelo usuário basta seguir os passos abaixo
+No controller que fará o processamento dos itens comprados pelo usuário faça assim:
 
 ```php
 
@@ -81,6 +83,51 @@ No controller que fará o processamento dos itens comprados pelo usuário basta 
         if ($result = $this->Carrinho->finalizaCompra() ) {
             $this->redirect($result);
         }
+
+```
+
+
+
+# Consultar transações por código
+
+Esta ação é o ideal para tratar o retorno do pagseguro via post ou get. Atribuindo 
+o código em uma variável agora você pode consultar o status da transação.
+No controller que receberá o retorno do PagSeguro você deve primeiramente definir 
+suas credenciais e com o código de retorno chamar o método `obterInformacoesTransacao` do 
+componente `Carrinho`, feito isto basta buscar pelas informações desejadas, sendo elas
+de momento:
+** Dados do usuário;
+** Status da transação;
+** Dados de pagamento;
+** Data (de origem e última notificação do PagSeguro
+
+
+```php
+            // recebendo o id da transação 
+            $idTransacao = $this->request->data['code'];
+            
+            // definindo credenciais
+            $this->Carrinho->setCredenciais('seu email', 'seu token');
+            
+            // caso haja dados a exibir...
+            if ($this->Carrinho->obterInformacoesTransacao($idTransacao) ) {
+
+                    $dadosUsuario = $this->Carrinho->obterDadosUsuario();
+                    
+                    $statusTransacao = $this->Carrinho->obterStatusTransacao();
+                    
+                    $dadosPagamento = $this->Carrinho->obterDadosPagamento();
+                    
+                    $dataTransacao = $this->Carrinho->obterDataTransacao();
+
+
+                    // visualizando tudo...
+                    debug($dadosUsuario);
+                    debug($statusTransacao);
+                    debug($dadosPagamento);
+                    debug($dataTransacao)
+                    
+                }
 
 ```
 
