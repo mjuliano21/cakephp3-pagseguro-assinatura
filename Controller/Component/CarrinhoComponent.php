@@ -188,8 +188,14 @@ class CarrinhoComponent extends Component{
   * @return object
   */    
     public function obterInformacoesTransacao($idTransacao) {
-        $this->consultaPorCodigo = PagSeguroTransactionSearchService::searchByCode($this->credenciais, $idTransacao);
-        return $this->consultaPorCodigo;
+        try{
+            if ($this->consultaPorCodigo = PagSeguroTransactionSearchService::searchByCode($this->credenciais, $idTransacao) ) {
+                return true;
+            }
+        } catch (PagSeguroServiceException $e) {
+            echo $e->getMessage();
+            exit();
+        }
     }
     
     
