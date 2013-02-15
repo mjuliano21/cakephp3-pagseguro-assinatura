@@ -46,7 +46,6 @@ class PagSeguroAccountCredentials extends PagSeguroCredentials{
 		} else {
 			throw new Exception("Credentials not set.");			
 		}
-                var_dump($email);
 	}
 	
 	/**
