@@ -6,9 +6,6 @@ Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvida
 
 =================
 
-.. contents::
-    :local:
-
 
 INSTALAÇÃO
 ==========
@@ -16,11 +13,11 @@ INSTALAÇÃO
 
 
 Zip
--------------------------------------
+
     Baixe o plugin, descompacte-o na pasta `app/Plugin`, renomeie a pasta `cake-plugin-pagseguro` para `PagSeguro`
 
 Git
--------------------------------------
+
     Submodulo
     -------------------------------------
         Na raiz de sua aplicação adicione como submodulo: 
