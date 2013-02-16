@@ -58,13 +58,15 @@ Arquivo bootstrap.php:
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    ));```
+	    ));
+```
 
 
 Controller qualquer onde será montada a finalização da compra:
 ```php <?php
 	    ...
-	    $this->Carrinho->setCredenciais('seu email', 'seu token');```
+	    $this->Carrinho->setCredenciais('seu email', 'seu token');
+```
 
 
 A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller
@@ -134,7 +136,8 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
         // e finalmente se os dados estivere corretos, redirecionando ao Pagseguro
         if ($result = $this->Carrinho->finalizaCompra() ) {
             $this->redirect($result);
-        }```
+        }
+```
 
 -------------------------------------------------------------------------------
 
