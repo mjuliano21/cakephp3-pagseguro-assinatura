@@ -40,12 +40,40 @@ Em seguida no arquivo `Controller/AppController.php` ou no controller desejado d
 ```
 
 
+Você deve possuir uma conta no PagSeguro pois precisará setar as credenciais,
+estas credenciais são compostas pelo seu email e o token que deve ser configurado na seção de integração
+junto ao PagSeguro.
+
+Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
+
+
+Arquivo bootstrap.php:
+```php <?php
+	    ...
+	    Configure::write('PagSeguro.credenciais', array(
+		  'email' => 'seu email',
+		  'token' => 'seu token'
+	    ));
+```
+
+Controller qualquer onde será montada a finalização da compra:
+```php <?php
+	    ...
+	    $this->Carrinho->setCredenciais('seu email', 'seu token');
+```
+
+---------------------------------------------------------------------
+  
+
+
 Para a realização de uma requisição simples, contendo somente os dados do comprador, 
 meio de entrega não definido, não definido tipo de pagamento e valores adicionais siga o modelo abaixo.
 
 No controller que fará o processamento dos itens comprados pelo usuário faça assim:
 
 ```php
+	<?php
+	...
 
         // definindo suas credenciais
         $this->Carrinho->setCredenciais('seu email', 'seu token');
@@ -85,7 +113,6 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
         }
 
 ```
-
 
 
 # Consultar transações por código

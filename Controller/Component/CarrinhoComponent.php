@@ -44,10 +44,15 @@ class CarrinhoComponent extends Component{
         
         
         // definindo alguns dados padrões
+        $config = Configure::read('PagSeguro');
+        if ( $config ) {
+            $this->credenciais = new PagSeguroAccountCredentials($config['credenciais']['email'], $config['credenciais']['token']);
+        }
+        
         $this->montaPagamento->setShippingType('3');
         $this->montaPagamento->setCurrency('BRL');
                
-        parent::startup($Controller);
+        //parent::startup($Controller);
     }
   
     
