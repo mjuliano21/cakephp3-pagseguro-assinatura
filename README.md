@@ -59,8 +59,7 @@ Arquivo bootstrap
 
 Controller qualquer onde será montada a finalização da compra
 ```php <?php
-	    $this->Carrinho->setCredenciais('seu email', 'seu token'); 
-```
+	    $this->Carrinho->setCredenciais('seu email', 'seu token'); ```
 
 
 A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller
