@@ -1,25 +1,27 @@
 # PAGSEGURO PLUGIN
-v 1.0
+_v 1.1_
 
 
-Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x
+Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.
+O plugin realiza apenas interfaceamento para a API de pagamentos do PAgSeguro, com
+isso nem o plugin nem o PagSeguro podem ser responsabilizados por uso em desconformidade
+à documentação fornecida pelo PagSeguro <https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html> 
+assim como valores fornecidos. A responsabilidade das corretas informações ao PagSeguro são
+estritamente do programador que criará a requisição no fechamento do carrinho de compras.
 
-=================
 
 
-INSTALAÇÃO
-==========
-
+## INSTALAÇÃO
+=============
 
 
 Zip
 
     Baixe o plugin, descompacte-o na pasta `app/Plugin`, renomeie a pasta `cake-plugin-pagseguro` para `PagSeguro`
-
+----------------------------------------
 Git
 
     Submodulo
-    -------------------------------------
         Na raiz de sua aplicação adicione como submodulo: 
        `git submodule add git@github.com:andrebian/cake-plugin-pagseguro.git app/Plugin/PagSeguro`
         
@@ -31,20 +33,18 @@ Git
 
 ---------------------------------------------------------------------------
 
-UTILIZAÇÃO
-==========
+## CONFIGURAÇÕES
+================
 
-Requisição de pagamento
-------------------------
+### Carregando o plugin
+-----------------------
 
-Primeiramente no arquivo `bootstrap.php` adicione o suporte ao plugin:
-```php CakePlugin::load('PagSeguro');```
+No arquivo `bootstrap.php` adicione o suporte ao plugin:
+`CakePlugin::load('PagSeguro');`
 
 
-Em seguida no arquivo `Controller/AppController.php` ou no controller desejado defina o seguinte:
-
-```php public $components = array('PagSeguro.Carrinho'); ```
-
+### Credenciais
+---------------
 
 Você deve possuir uma conta no PagSeguro pois precisará setar as credenciais,
 estas credenciais são compostas pelo seu email e o token que deve ser configurado na seção de integração
@@ -52,25 +52,43 @@ junto ao PagSeguro.
 
 Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
 
-
 Arquivo bootstrap.php:
 ```php <?php
 	    ...
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    ));
-```
+	    ));```
+
 
 Controller qualquer onde será montada a finalização da compra:
 ```php <?php
 	    ...
-	    $this->Carrinho->setCredenciais('seu email', 'seu token');
-```
+	    $this->Carrinho->setCredenciais('seu email', 'seu token');```
 
----------------------------------------------------------------------
-  
 
+A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller
+
+
+### Carregando o componente
+---------------------------
+
+Agora que você já configurou suas credenciais deve definir no `AppController` ou no controller
+que o componente será utilizado
+
+```php public $components = array('PagSeguro.Carrinho');```
+
+
+caso já possua mais componentes faça-o da seguinte forma
+```php public $components = array('Outros componentes.....','PagSeguro.Carrinho');```
+
+--------------------------------------------------------------------------------
+
+## UTILIZAÇÃO
+=============
+
+### Requisição de pagamento
+---------------------------
 
 Para a realização de uma requisição simples, contendo somente os dados do comprador, 
 meio de entrega não definido, não definido tipo de pagamento e valores adicionais siga o modelo abaixo.
@@ -116,15 +134,11 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
         // e finalmente se os dados estivere corretos, redirecionando ao Pagseguro
         if ($result = $this->Carrinho->finalizaCompra() ) {
             $this->redirect($result);
-        }
+        }```
 
-```
+-------------------------------------------------------------------------------
 
-
-API de notificação
-------------------
-
-# Consultar transações por código
+### Consultar transações por código
 
 Esta ação é o ideal para tratar o retorno do pagseguro via post ou get. Atribuindo 
 o código em uma variável agora você pode consultar o status da transação.
@@ -132,14 +146,14 @@ No controller que receberá o retorno do PagSeguro você deve primeiramente defi
 suas credenciais e com o código de retorno chamar o método `obterInformacoesTransacao` do 
 componente `Carrinho`, feito isto basta buscar pelas informações desejadas, sendo elas
 de momento:
-** Dados do usuário;
-** Status da transação;
-** Dados de pagamento;
-** Data (de origem e última notificação do PagSeguro
+* Dados do usuário;
+* Status da transação;
+* Dados de pagamento;
+* Data (de origem e última notificação do PagSeguro
 
 
 ```php
-            // recebendo o id da transação 
+            // recebendo o id da transação via GET (URL)
             $idTransacao = $this->params['url']['transaction_id'];
             
             // definindo credenciais caso não tenham sido definidas no bootstrap
@@ -163,21 +177,84 @@ de momento:
                     debug($dadosPagamento);
                     debug($dataTransacao)
                     
-                }
-
-```
+                }```
 
 
 --------------------------------------------------------------------------
 
+### API de notificação
+----------------------
+
+Para utilizar o componente de notificação o mesmo deve ser declarado no `AppController` ou no controller que receberá a notificação.
+`public $components = array('Demais componentes....', 'PagSeguro.Notificacao');`
+
+
+O PagSeguro fornece a opção de configuração de uma URL para o recebimento de notificações.
+Tal URL receberá uma requisição em formato POST contendo duas informações:
+1 - Tipo da notificação; 2 - Código da notificação
+
+Não se confunda, o código da transação e da notificação são diferentes para uma mesma compra, e a cada
+notificação o código se altera.
+
+Modelo recebido pelo Pagseguro:
+```php
+    POST http://lojamodelo.com.br/notificacao HTTP/1.1
+    Host:pagseguro.uol.com.br
+    Content-Length:85
+    Content-Type:application/x-www-form-urlencoded
+    notificationCode=766B9C-AD4B044B04DA-77742F5FA653-E1AB24
+    notificationType=transaction```
+
+
+Com tais dados em mãos você deve realizar a requisição das informações da transação.
+
+No controller/action que receberá tal notificação basta realizar a chamada ao método `obterDadosTransacao` informando o tipo e código de notificação:
+
+```php
+        $tipo = $this->request->data['notificationType'];
+        $codigo = $this->request->data['notificationCode'];
+
+        if ( $this->Notificacao->obterDadosTransacao($tipo, $codigo) ) {
+            // retorna somente os dados do comprador
+            $dadosUsuario = $this->Notificacao->obterDadosUsuario(); 
+
+            // retorna o status da transação 
+            $statusTransacao = $this->Notificacao->obterStatusTransacao();
+
+            // retorna os dados de pagamento (tipo de pagamento e forma de pagamento)
+            $dadosPagamento = $this->Notificacao->obterDadosPagamento();
+
+            // retorna a data que a compra foi realizada e última notificação
+            $dataTransacao = $this->Notificacao->obterDataTransacao();
+
+            
+            // agora exibindo todos os resultados
+            debug($dadosUsuario);
+            debug($statusTransacao);
+            debug($dadosPagamento);
+            debug($dataTransacao);
+
+        }```
+
+--------------------------------------------------------------------------------
+
+
+
 # TODO
 
-## Pagamento
+### Pagamento
     * definir meios de pagamento
+    
 
-## Notificações
-Integração com notificações
+### Consultas
+    * Consulta por data
+    * Consulta por transações abandonadas
+    * Exibição de itens e valores da compra
 
 
-## Testes
+
+### Testes
 Criar testes
+
+
+Att. Andre Cardoso
