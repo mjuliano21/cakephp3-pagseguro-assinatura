@@ -55,11 +55,11 @@ Arquivo bootstrap.php:
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    )); ```
+	    )); 
+```
 
 Controller qualquer onde será montada a finalização da compra
 ```php <?php
-	    ...
 	    $this->Carrinho->setCredenciais('seu email', 'seu token'); 
 ```
 
