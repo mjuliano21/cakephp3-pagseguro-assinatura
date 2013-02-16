@@ -50,16 +50,16 @@ junto ao PagSeguro.
 Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
 
 Arquivo bootstrap
-```php <?php
+`<?php
 	    ...
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    )); ```
+	    )); `
 
 Controller qualquer onde será montada a finalização da compra
-```php <?php
-	    $this->Carrinho->setCredenciais('seu email', 'seu token'); ```
+` <?php
+	    $this->Carrinho->setCredenciais('seu email', 'seu token'); `
 
 
 A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller
@@ -180,7 +180,7 @@ de momento:
 
 
 ### API de notificação
-----------------------
+
 
 Para utilizar o componente de notificação o mesmo deve ser declarado no `AppController` ou no controller que receberá a notificação.
 `public $components = array('Demais componentes....', 'PagSeguro.Notificacao');`
@@ -194,18 +194,18 @@ Não se confunda, o código da transação e da notificação são diferentes pa
 notificação o código se altera.
 
 Modelo recebido pelo Pagseguro:
-```php
+`
     POST http://lojamodelo.com.br/notificacao HTTP/1.1
     Host:pagseguro.uol.com.br
     Content-Length:85
     Content-Type:application/x-www-form-urlencoded
     notificationCode=766B9C-AD4B044B04DA-77742F5FA653-E1AB24
-    notificationType=transaction```
+    notificationType=transaction `
 
 
 Com tais dados em mãos você deve realizar a requisição das informações da transação.
 
-No controller/action que receberá tal notificação basta realizar a chamada ao método `obterDadosTransacao` informando o tipo e código de notificação:
+No controller/action que receberá tal notificação basta realizar a chamada ao método `obterDadosTransacao` informando o tipo e código de notificação
 
 ```php
         $tipo = $this->request->data['notificationType'];
@@ -231,9 +231,10 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             debug($dadosPagamento);
             debug($dataTransacao);
 
-        }```
+        }
+```
 
---------------------------------------------------------------------------------
+====================
 
 
 
