@@ -4,40 +4,49 @@ v 1.0
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x
 
+=================
 
-----------------------------------------------------------------------------
+.. contents::
+    :local:
 
-## INSTALAÇÃO
 
-#### Download
+INSTALAÇÃO
+==========
 
-Zip:
+
+
+Zip
+-------------------------------------
     Baixe o plugin, descompacte-o na pasta `app/Plugin`, renomeie a pasta `cake-plugin-pagseguro` para `PagSeguro`
 
-Git: 
-    Submodulo: Na raiz de sua aplicação adicione como submodulo
-        ```php git submodule add git@github.com:andrebian/cake-plugin-pagseguro.git app/Plugin/PagSeguro
-        ```
+Git
+-------------------------------------
+    Submodulo
+    -------------------------------------
+        Na raiz de sua aplicação adicione como submodulo: 
+       `git submodule add git@github.com:andrebian/cake-plugin-pagseguro.git app/Plugin/PagSeguro`
+        
 
-    Clonando:  
-        git clone git@github.com:andrebian/cake-plugin-pagseguro.git
+    Clonando  
+    -------------------------------------
+        `git clone git@github.com:andrebian/cake-plugin-pagseguro.git`
         Altere o nome da pasta de `cake-plugin-pagseguro` para `PagSeguro` e cole-a na pasta `Plugin` de sua aplicação
 
 ---------------------------------------------------------------------------
 
-## UTILIZAÇÃO
+UTILIZAÇÃO
+==========
+
+Requisição de pagamento
+------------------------
 
 Primeiramente no arquivo `bootstrap.php` adicione o suporte ao plugin:
-```php
-    CakePlugin::load('PagSeguro');
-```
+```php CakePlugin::load('PagSeguro');```
 
 
 Em seguida no arquivo `Controller/AppController.php` ou no controller desejado defina o seguinte:
 
-```php
-    public $components = array('PagSeguro.Carrinho');
-```
+```php public $components = array('PagSeguro.Carrinho'); ```
 
 
 Você deve possuir uma conta no PagSeguro pois precisará setar as credenciais,
@@ -115,6 +124,9 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
 ```
 
 
+API de notificação
+------------------
+
 # Consultar transações por código
 
 Esta ação é o ideal para tratar o retorno do pagseguro via post ou get. Atribuindo 
@@ -131,9 +143,9 @@ de momento:
 
 ```php
             // recebendo o id da transação 
-            $idTransacao = $this->request->data['code'];
+            $idTransacao = $this->params['url']['transaction_id'];
             
-            // definindo credenciais
+            // definindo credenciais caso não tenham sido definidas no bootstrap
             $this->Carrinho->setCredenciais('seu email', 'seu token');
             
             // caso haja dados a exibir...
