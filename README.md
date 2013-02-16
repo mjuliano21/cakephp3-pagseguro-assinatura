@@ -137,13 +137,7 @@ de momento:
 # TODO
 
 ## Pagamento
-Itens adicionais para compra como
-    * Valor extra
-    * MaxAge (validade da requisição)
-    * MaxUses (Quantidade de requisições para itens fixos)
-    * Retorno de status logo após a finalização da compra
-
-
+    * definir meios de pagamento
 
 ## Notificações
 Integração com notificações
