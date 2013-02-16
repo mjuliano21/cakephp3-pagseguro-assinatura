@@ -49,7 +49,7 @@ junto ao PagSeguro.
 
 Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
 
-Arquivo bootstrap.php:
+Arquivo bootstrap.php
 ```php <?php
 	    ...
 	    Configure::write('PagSeguro.credenciais', array(
@@ -73,7 +73,7 @@ A configuração das credenciais podem ser definidas no `bootstrap` e alteradas 
 Agora que você já configurou suas credenciais deve definir no `AppController` ou no controller
 que o componente será utilizado
 
-```php public $components = array('PagSeguro.Carrinho');```
+```php public $components = array('PagSeguro.Carrinho'); ```
 
 
 caso já possua mais componentes faça-o da seguinte forma
