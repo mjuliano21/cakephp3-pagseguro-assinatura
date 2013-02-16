@@ -30,7 +30,7 @@ Git
         `git clone git@github.com:andrebian/cake-plugin-pagseguro.git`
         Altere o nome da pasta de `cake-plugin-pagseguro` para `PagSeguro` e cole-a na pasta `Plugin` de sua aplicação
 
----------------------------------------------------------------------------
+
 
 ## CONFIGURAÇÕES
 ================
@@ -38,7 +38,7 @@ Git
 ### Carregando o plugin
 
 No arquivo `bootstrap.php` adicione o suporte ao plugin:
-`CakePlugin::load('PagSeguro');`
+`CakePlugin::load('PagSeguro');` ou `CakePlugin::loadAll();`
 
 
 ### Credenciais
@@ -55,9 +55,7 @@ Arquivo bootstrap.php:
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    ));
-```
-
+	    )); ```
 
 Controller qualquer onde será montada a finalização da compra:
 ```php <?php
@@ -68,7 +66,7 @@ Controller qualquer onde será montada a finalização da compra:
 
 A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller
 
----------------------------
+
 ### Carregando o componente
 
 
@@ -81,13 +79,13 @@ que o componente será utilizado
 caso já possua mais componentes faça-o da seguinte forma
 ```php public $components = array('Outros componentes.....','PagSeguro.Carrinho');```
 
---------------------------------------------------------------------------------
+
 
 ## UTILIZAÇÃO
 =============
 
 ### Requisição de pagamento
----------------------------
+
 
 Para a realização de uma requisição simples, contendo somente os dados do comprador, 
 meio de entrega não definido, não definido tipo de pagamento e valores adicionais siga o modelo abaixo.
@@ -136,11 +134,11 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
         }
 ```
 
--------------------------------------------------------------------------------
+
 
 ### Consultar transações por código
 
-Esta ação é o ideal para tratar o retorno do pagseguro via post ou get. Atribuindo 
+Esta ação é o ideal para tratar o retorno do pagseguro via GET. Atribuindo 
 o código em uma variável agora você pode consultar o status da transação.
 No controller que receberá o retorno do PagSeguro você deve primeiramente definir 
 suas credenciais e com o código de retorno chamar o método `obterInformacoesTransacao` do 
@@ -177,10 +175,10 @@ de momento:
                     debug($dadosPagamento);
                     debug($dataTransacao)
                     
-                }```
+                } ```
 
 
---------------------------------------------------------------------------
+
 
 ### API de notificação
 ----------------------
