@@ -57,10 +57,10 @@ Arquivo bootstrap.php:
 		  'token' => 'seu token'
 	    )); ```
 
-Controller qualquer onde será montada a finalização da compra:
+Controller qualquer onde será montada a finalização da compra
 ```php <?php
 	    ...
-	    $this->Carrinho->setCredenciais('seu email', 'seu token');
+	    $this->Carrinho->setCredenciais('seu email', 'seu token'); 
 ```
 
 
