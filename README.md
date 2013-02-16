@@ -49,14 +49,13 @@ junto ao PagSeguro.
 
 Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
 
-Arquivo bootstrap.php
+Arquivo bootstrap
 ```php <?php
 	    ...
 	    Configure::write('PagSeguro.credenciais', array(
 		  'email' => 'seu email',
 		  'token' => 'seu token'
-	    )); 
-```
+	    )); ```
 
 Controller qualquer onde será montada a finalização da compra
 ```php <?php
