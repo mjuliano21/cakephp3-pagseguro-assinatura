@@ -211,21 +211,23 @@ class CarrinhoComponent extends Component{
   */   
     public function obterDadosUsuario() {
         $contato = $this->consultaPorCodigo->getSender();
-        $endereco = $this->consultaPorCodigo->getShipping();
+        $endereco = $this->consultaPorCodigo->getShipping()->getAddress();
         
-        $usuario['nome'] = $contato->getName();
-        $usuario['email'] = $contato->getEmail();
-        $usuario['telefoneCompleto'] = $contato->getPhone()->getAreaCode() . ' ' . $contato->getPhone()->getNumber();
-        $usuario['ddd'] = $contato->getPhone()->getAreaCode();
-        $usuario['numeroTelefone'] = $contato->getPhone()->getNumber();
-        $usuario['endereco'] = $endereco->getAddress()->getStreet();
-        $usuario['numero'] = $endereco->getAddress()->getNumber();
-        $usuario['complemento'] = $endereco->getAddress()->getComplement();
-        $usuario['bairro'] = $endereco->getAddress()->getDistrict();
-        $usuario['cidade'] = $endereco->getAddress()->getCity();
-        $usuario['uf'] = $endereco->getAddress()->getState();
-        $usuario['cep'] = $endereco->getAddress()->getPostalCode();
-        $usuario['pais'] = $endereco->getAddress()->getCountry();
+        $dadosUsuario = 
+            array(  'nome' => $contato->getName(),
+                    'email' => $contato->getEmail(),
+                    'telefoneCompleto' => $contato->getPhone()->getAreaCode().' '.$contato->getPhone()->getNumber(),
+                    'codigoArea' => $contato->getPhone()->getAreaCode(),
+                    'numeroTelefone' => $contato->getPhone()->getNumber(),
+                    'endereco' => $endereco->getStreet(),
+                    'numero' => $endereco->getNumber(),
+                    'complemento' => $endereco->getComplement(),
+                    'bairro' => $endereco->getDistrict(),
+                    'cidade' => $endereco->getCity(),
+                    'cep' => $endereco->getPostalCode(),
+                    'uf' => $endereco->getState(),
+                    'pais' => $endereco->getCountry()
+             ) ;
         
         return $usuario;
     }
