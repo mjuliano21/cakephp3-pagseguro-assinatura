@@ -227,12 +227,58 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             // retorna os dados de produtos comprados
             $produtos = $this->Notificacao->obterValores()
             
+
             // agora exibindo todos os resultados
+
             debug($dadosUsuario);
+            /*
+            array(
+                'nome' => 'Andre Cardoso',
+                'email' => 'andrecardosodev@gmail.com',
+                'telefoneCompleto' => '41 00000000',
+                'codigoArea' => '41',
+                'numeroTelefone' => '00000000',
+                'endereco' => 'Rua Teste',
+                'numero' => '1234',
+                'complemento' => 'Complemento',
+                'bairro' => 'Centro',
+                'cidade' => 'Curitiba',
+                'cep' => '80000000',
+                'uf' => 'PR',
+                'pais' => 'BRA'
+            )
+            */
+
+
             debug($statusTransacao);
+            /*
+            array(
+                'id' => (int) 1,
+                'descricao' => 'Aguardando pagamento'
+            )    
+            */
+
+
             debug($dadosPagamento);
+            /*
+            array(
+                'tipo' => 'Boleto',
+                'metodo' => 'Boleto Santander'
+            )
+            */
+
+
             debug($dataTransacao);
-            
+            /*
+            array(
+                'iso' => '2013-02-16T19:35:53.000-02:00',
+                'ptBr' => '16/02/2013 19:35:53',
+                'ultimaTentativaIso' => '2013-02-16T19:36:00.000-02:00',
+                'ultimaTentativaPtBr' => '16/02/2013 19:36:00'
+            )
+            */
+
+
             debug($produtos);
             /*
             array(
