@@ -229,7 +229,7 @@ class CarrinhoComponent extends Component{
                     'pais' => $endereco->getCountry()
              ) ;
         
-        return $usuario;
+        return $dadosUsuario;
     }
     
  
