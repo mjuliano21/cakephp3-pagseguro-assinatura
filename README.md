@@ -158,20 +158,91 @@ de momento:
             // caso haja dados a exibir...
             if ($this->Carrinho->obterInformacoesTransacao($idTransacao) ) {
 
+                    // retorna os dados do usuário
                     $dadosUsuario = $this->Carrinho->obterDadosUsuario();
                     
+                    // retorna o status da transação
                     $statusTransacao = $this->Carrinho->obterStatusTransacao();
                     
+                    // retorna os dados de pagamento    
                     $dadosPagamento = $this->Carrinho->obterDadosPagamento();
                     
+                    // retorna a data de compra e última interação
                     $dataTransacao = $this->Carrinho->obterDataTransacao();
 
+                    // retorna detalhes dos produtos e valores
+                    $produtos = $this->Carrinho->obterValores();
 
-                    // visualizando tudo...
+
+                    // agora exibindo todos os resultados
+
                     debug($dadosUsuario);
+                    /*
+                    array(
+                        'nome' => 'Andre Cardoso',
+                        'email' => 'andrecardosodev@gmail.com',
+                        'telefoneCompleto' => '41 00000000',
+                        'codigoArea' => '41',
+                        'numeroTelefone' => '00000000',
+                        'endereco' => 'Rua Teste',
+                        'numero' => '1234',
+                        'complemento' => 'Complemento teste',
+                        'bairro' => 'Centro',
+                        'cidade' => 'Curitiba',
+                        'cep' => '80000000',
+                        'uf' => 'PR',
+                        'pais' => 'BRA'
+                    )
+                    */
+
+
                     debug($statusTransacao);
+                    /*
+                    array(
+                        'id' => (int) 7,
+                        'descricao' => 'Cancelada'
+                    )
+                    */
+
+
                     debug($dadosPagamento);
-                    debug($dataTransacao)
+                    /*
+                    array(
+                        'tipo' => 'Boleto',
+                        'metodo' => 'Boleto Santander'
+                    )
+                    */
+
+
+                    debug($dataTransacao);
+                    /*
+                    array(
+                        'iso' => '2012-11-24T13:14:41.000-02:00',
+                        'ptBr' => '24/11/2012 13:14:41',
+                        'ultimaTentativaIso' => '2012-12-08T07:34:15.000-02:00',
+                        'ultimaTentativaPtBr' => '08/12/2012 07:34:15'
+                    )    
+                    */
+
+                    
+                    debug($produtos);
+                    /*
+                    array(
+                        'valorTotal' => '0.01',
+                        'descontoAplicado' => '0.00',
+                        'valorExtra' => '0.00',
+                        'produtos' => array(
+                                (int) 0 => array(
+                                        'id' => '1',
+                                        'descricao' => 'Produto Teste',
+                                        'quantidade' => '1',
+                                        'valorUnitario' => '0.01',
+                                        'peso' => 'Produto Teste',
+                                        'frete' => null
+                                )
+                        )
+                    )
+                    */
                     
                 } 
 ```
@@ -315,7 +386,6 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
 ### Consultas
     * Consulta por data
     * Consulta por transações abandonadas
-    * Exibição de itens e valores da compra
 
 
 

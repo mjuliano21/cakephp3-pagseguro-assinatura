@@ -396,4 +396,31 @@ class CarrinhoComponent extends Component{
     }
     
     
+    /**
+  * obtervalores method
+  * 
+  * @return array
+  */   
+    public function obterValores() {
+        foreach($this->consultaPorCodigo->getItems() as $item) {
+            $itens[] = array(   'id' => $item->getId(), 
+                                'descricao' => $item->getDescription() , 
+                                'quantidade' => $item->getQuantity(),
+                                'valorUnitario' => $item->getAmount(),
+                                'peso' => $item->getDescription(),
+                                'frete' => $item->getShippingCost()
+                            );
+        }
+        
+        $dados = array(
+            'valorTotal' => $this->consultaPorCodigo->getGrossAmount(),
+            'descontoAplicado' => $this->consultaPorCodigo->getDiscountAmount(),
+            'valorExtra' => $this->consultaPorCodigo->getExtraAmount(),
+            'produtos' => $itens,
+        );
+        
+        return $dados;
+    }
+    
+    
 }
