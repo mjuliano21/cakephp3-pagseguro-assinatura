@@ -224,12 +224,34 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             // retorna a data que a compra foi realizada e última notificação
             $dataTransacao = $this->Notificacao->obterDataTransacao();
 
+            // retorna os dados de produtos comprados
+            $produtos = $this->Notificacao->obterValores()
             
             // agora exibindo todos os resultados
             debug($dadosUsuario);
             debug($statusTransacao);
             debug($dadosPagamento);
             debug($dataTransacao);
+            
+            debug($produtos);
+            /*
+            array(
+                'valorTotal' => '0.01',
+                'descontoAplicado' => '0.00',
+                'valorExtra' => '0.00',
+                'produtos' => array(
+                        (int) 0 => array(
+                                'id' => '1',
+                                'descricao' => 'Produto Teste',
+                                'quantidade' => '1',
+                                'valorUnitario' => '0.01',
+                                'peso' => 'Produto Teste',
+                                'frete' => null
+                        )
+                )
+            )
+            */
+
 
         }
 ```
