@@ -259,6 +259,34 @@ class NotificacaoComponent extends Component{
         $data['ultimaTentativaPtBr'] = date('d/m/Y H:i:s', strtotime($data['ultimaTentativaIso']));
         
         return $data;
+        
+    }
+    
+    
+ /**
+  * obtervalores method
+  * 
+  * @return array
+  */   
+    public function obterValores() {
+        foreach($this->dadosTransacao->getItems() as $item) {
+            $itens[] = array(   'id' => $item->getId(), 
+                                'descricao' => $item->getDescription() , 
+                                'quantidade' => $item->getQuantity(),
+                                'valorUnitario' => $item->getAmount(),
+                                'peso' => $item->getDescription(),
+                                'frete' => $item->getShippingCost()
+                            );
+        }
+        
+        $dados = array(
+            'valorTotal' => $this->dadosTransacao->getGrossAmount(),
+            'descontoAplicado' => $this->dadosTransacao->getDiscountAmount(),
+            'valorExtra' => $this->dadosTransacao->getExtraAmount(),
+            'produtos' => $itens,
+        );
+        
+        return $dados;
     }
     
     
