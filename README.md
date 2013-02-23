@@ -105,11 +105,14 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
 
         /**
         *   adicionarItem method
-        *   @param int id  
-        *   @param string descricao 
-        *   @param string valorUnitario (formato 0.00 -> ponto como separador de centavos, e nada separando milhares)
-        *   @param string peso (formato em gramas ex: 1KG = 1000)
-        *   @param int quantidade 
+        *   @param int id  OBRIGATÓRIO
+        *   @param string descricao OBRIGATÓRIO
+        *   @param string valorUnitario (formato 0.00 -> ponto como separador 
+        *       de centavos, e nada separando milhares) OBRIGATÓRIO
+        *   @param string peso (formato em gramas ex: 1KG = 1000) OBRIGATÓRIO
+        *   @param int quantidade OBRIGATÓRIO (padrão 1 unidade)
+        *   @param string frete (valor do frete formato 0.00 -> ponto como separador
+        *       de centavos e nada separando milhares) OPCIONAL
         */
 
 
@@ -135,6 +138,35 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
 
         // definindo o endereço do comprador
         $this->Carrinho->setEnderecoComprador('00000000', 'Rua Teste', '1234', 'Complemento', 'Bairro', 'Cidade', 'UF');
+
+        
+        /**
+        *   setTipoFrete method OPCIONAL
+        *
+        *   @param tipoFrete (PAC, SEDEX, NAO_ESPECIFICADO)
+        *
+        */
+        $this->Carrinho->setTipoFrete('SEDEX');
+
+
+        /**
+        *   setValorFrete method OPCIONAL
+        *
+        *   @param string valorTotalFrete (formato 0.00 -> ponto como separador de
+        *       centavos e nada separando milhares)
+        *
+        */
+        $this->Carrinho->setValorTotalFrete('32.00');
+
+
+        /**
+        *   tipoPagamento method OPCIONAL
+        *   
+        *   @param string tipoPagamento (CREDIT_CARD, BOLETO, ONLINE_TRANSFER, BALANCE, OI_PAGGO)
+        *
+        */
+        $this->Carrinho->setTipoPagamento('BOLETO');
+
 
         // e finalmente se os dados estivere corretos, redirecionando ao Pagseguro
         if ($result = $this->Carrinho->finalizaCompra() ) {

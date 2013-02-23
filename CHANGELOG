@@ -5,12 +5,16 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
+1.2 - 23/02/2013
+    Adicionados tipo de entrega, valor do frete e tipo de pagamento
+
 
 1.1 - 22/02/2013
     * Criados retorno de dados de produtos comprados em carrinho e notificações
     * Melhorada documentação - adicionados exemplos de retornos
     * Definido tipo de licença MIT (http://opensource.org/licenses/MIT)
     * Adicionada versão da API do PagSeguro
+    
 
 1.0 - 13/02/2013 
     Primeira versão do plugin

@@ -9,7 +9,7 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 1.1
+* @version 1.1 
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html
 * 
@@ -28,12 +28,14 @@ class CarrinhoComponent extends Component{
     private $montaPagamento = null;
     private $consultaPorCodigo = null;
     private $comprador = null;
+    private $tipoPagamento = null;
     private $Controller = null;
     
    
 /**
  * 
  * @param \Controller $Controller
+ * @since 1.0
  */    
     public function startup(\Controller $Controller) {
         
@@ -41,7 +43,7 @@ class CarrinhoComponent extends Component{
         $this->loadPagSeguroLibrary = new PagSeguroLibrary;
         $this->montaPagamento = new PagSeguroPaymentRequest;
         $this->comprador = new PagSeguroSender;
-        
+        $this->tipoPagamento = new PagSeguroPaymentMethodType;
         
         // definindo alguns dados padrões
         $config = Configure::read('PagSeguro');
@@ -61,6 +63,7 @@ class CarrinhoComponent extends Component{
   * 
   * @param string $email
   * @param string $token
+  * @since 1.0
   */   
     public function setCredenciais($email, $token) {
         $this->credenciais = new PagSeguroAccountCredentials($email, $token);
@@ -71,6 +74,7 @@ class CarrinhoComponent extends Component{
   * Define uma URL para após a finalização da interação do usuário com o PagSeguro
   * 
   * @param string $urlRetorno
+  * @since 1.0
   */   
     public function setUrlRetorno($urlRetorno = null) {
        $this->montaPagamento->setRedirectURL($urlRetorno); 
@@ -81,6 +85,7 @@ class CarrinhoComponent extends Component{
   * Seta a referência para a compra
   * 
   * @param int $id
+  * @since 1.0
   */
     public function setReferencia($id) {
         $this->montaPagamento->setReference($id);
@@ -96,6 +101,7 @@ class CarrinhoComponent extends Component{
  * @param int $peso
  * @param int $quantidade
  * @param float $frete
+ * @since 1.0
  */
     public function adicionarItem($id, $nomeProduto, $valorUnit, $peso, $quantidade = 1, $frete = null) {
         $this->montaPagamento->addItem($id, $nomeProduto, $quantidade, $valorUnit, $peso, $frete);
@@ -106,7 +112,8 @@ class CarrinhoComponent extends Component{
   * Define um valor extra, ponto flutuante com 2 casas decimais
   * Pode ser valor positivo para acréscimo ou negativo para desconto
   * 
-  * @param float $valor
+  * @param string $valor (formato 0.00)
+  * @since 1.0
   */   
     public function setValorExtra($valor) {
         $this->montaPagamento->setExtraAmount($valor);
@@ -117,6 +124,7 @@ class CarrinhoComponent extends Component{
   * Define em segundos por quanto tempo a requisição será válida
   * 
   * @param int $validade
+  * @since 1.0
   */   
     public function setValidadeRequisicao($validade) {
         $this->montaPagamento->setMaxAge($validade);
@@ -128,6 +136,7 @@ class CarrinhoComponent extends Component{
   * Útil para produtos ou taxas não variáveis
   * 
   * @param int $quantidade
+  * @since 1.0
   */   
     public function setQuantidadeUso($quantidade) {
         $this->montaPagamento->setMaxUses($quantidade);
@@ -141,6 +150,7 @@ class CarrinhoComponent extends Component{
   * @param string $email
   * @param string $codigoArea
   * @param string $numeroTelefone
+  * @since 1.0
   */   
     public function setContatosComprador($nome, $email, $codigoArea, $numeroTelefone) {
         $this->montaPagamento->setSender($nome, $email, $codigoArea, $numeroTelefone);
@@ -157,7 +167,8 @@ class CarrinhoComponent extends Component{
   * @param string $bairro
   * @param string $cidade
   * @param string $uf
-  * @param string $pais
+  * @param string $pais Padrão BRA
+  * @since 1.0
   */   
     public function setEnderecoComprador($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais = 'BRA') {
         $this->montaPagamento->setShippingAddress($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais);
@@ -165,9 +176,63 @@ class CarrinhoComponent extends Component{
     
     
  /**
+  * Define o tipo de frete que será efetuado na compra
+  * 
+  * @param string $tipoFrete 
+  * 1 	Encomenda normal (PAC).
+  * 2 	SEDEX (SEDEX)
+  * 3 	Tipo de frete não especificado (NAO_ESPECIFICADO ou outro qualquer) -> Padrão
+  * @since 1.2
+  * 
+  */   
+    public function setTipoFrete($tipoFrete) {
+        
+        switch ($tipoFrete) {
+            case 'PAC':
+                $tipoEntrega = '1';
+                break;
+            case 'SEDEX':
+                $tipoEntrega = '2';
+                break;
+            default:
+                $tipoEntrega = '3';
+                break;
+        }
+        
+        $this->montaPagamento->setShippingType($tipoEntrega);
+    }
+    
+    
+ /**
+  * Define o valor total do frete na compra
+  * 
+  * @param string $valorTotalFrete
+  * @since 1.2
+  */   
+    public function setValorTotalFrete($valorTotalFrete) {
+        $this->montaPagamento->setShippingCost($valorTotalFrete);
+    }
+    
+    
+/**
+ * Define o tipo de pagamento que será disponibilizado ao cliente.
+ * Detalhe: O tipo de pagamento condiz somente com os tipos habilitados em sua conta
+ * junto ao PagSeguro
+ * 
+ * @param string tipoPagamento (CREDIT_CARD, BOLETO, ONLINE_TRANSFER, BALANCE, OI_PAGGO)
+ * @since 1.2
+ * 
+ */    
+    public function setTipoPagamento($tipoPagamento) {
+        $this->tipoPagamento->setByType($tipoPagamento);
+    }    
+    
+    
+ /**
   * E enfim enviando o usuário para o pagamento
   * 
   * @return boolean
+  * @since 1.0
   */   
     public function finalizaCompra() {
         try {
@@ -191,6 +256,7 @@ class CarrinhoComponent extends Component{
   * 
   * @param string $idTransacao
   * @return object
+  * @since 1.0
   */    
     public function obterInformacoesTransacao($idTransacao) {
         try{
@@ -208,6 +274,7 @@ class CarrinhoComponent extends Component{
   * Retorna os dados do usuário após a consulta
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDadosUsuario() {
         $contato = $this->consultaPorCodigo->getSender();
@@ -237,6 +304,7 @@ class CarrinhoComponent extends Component{
   * Retorna em modo de array o status da transação pesquisada
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterStatusTransacao() {
         $status = $this->consultaPorCodigo->getStatus()->getValue();
@@ -283,6 +351,7 @@ class CarrinhoComponent extends Component{
   * Retorna tipo e meio de pagamento
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDadosPagamento() {
         $tipoPagamento = $this->consultaPorCodigo->getPaymentMethod()->getType()->getValue();
@@ -385,6 +454,7 @@ class CarrinhoComponent extends Component{
   * e em ptBR para exibição somente
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDataTransacao() {
         $data['iso'] = $this->consultaPorCodigo->getDate();
@@ -400,6 +470,7 @@ class CarrinhoComponent extends Component{
   * obtervalores method
   * 
   * @return array
+  * @since 1.1
   */   
     public function obterValores() {
         foreach($this->consultaPorCodigo->getItems() as $item) {

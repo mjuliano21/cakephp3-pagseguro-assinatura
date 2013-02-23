@@ -9,7 +9,7 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 1.1
+* @version 1.2
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  (https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html)
 * 
@@ -24,7 +24,11 @@ class NotificacaoComponent extends Component{
     private $dadosTransacao = null;
     
     
-    
+ /**
+  * 
+  * @param \Controller $controller
+  * @since 1.0
+  */   
     public function startup(\Controller $controller) {
         $this->loadPagSeguroLibrary = new PagSeguroLibrary;
         
@@ -42,6 +46,7 @@ class NotificacaoComponent extends Component{
   * 
   * @param string $email
   * @param string $token
+  * @since 1.0
   */   
     public function setCredenciais($email, $token) {
         $this->credenciais = new PagSeguroAccountCredentials($email, $token);
@@ -54,6 +59,7 @@ class NotificacaoComponent extends Component{
   * @param string $tipo
   * @param string $codigo
   * @return boolean
+  * @since 1.0
   */   
     public function obterDadosTransacao($tipo, $codigo) {
                 $tipoNotificacao = new PagSeguroNotificationType($tipo);
@@ -76,6 +82,7 @@ class NotificacaoComponent extends Component{
   * Retorna os dados do comprador
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDadosUsuario() {
         $contato = $this->dadosTransacao->getSender();
@@ -103,6 +110,7 @@ class NotificacaoComponent extends Component{
   * Retorna em modo de array o status da transação pesquisada
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterStatusTransacao() {
         $status = $this->dadosTransacao->getStatus()->getValue();
@@ -149,6 +157,7 @@ class NotificacaoComponent extends Component{
   * Retorna tipo e meio de pagamento
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDadosPagamento() {
         $tipoPagamento = $this->dadosTransacao->getPaymentMethod()->getType()->getValue();
@@ -251,6 +260,7 @@ class NotificacaoComponent extends Component{
   * e em ptBR para exibição somente
   * 
   * @return array
+  * @since 1.0
   */   
     public function obterDataTransacao() {
         $data['iso'] = $this->dadosTransacao->getDate();
@@ -267,6 +277,7 @@ class NotificacaoComponent extends Component{
   * obtervalores method
   * 
   * @return array
+  * @since 1.1
   */   
     public function obterValores() {
         foreach($this->dadosTransacao->getItems() as $item) {
@@ -293,6 +304,7 @@ class NotificacaoComponent extends Component{
     /**
   * 
   * @param string $notificationCode
+  * @since 1.0
   */   
     private function __transactionNotification($notificationCode) {	
     	try {
