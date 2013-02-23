@@ -423,10 +423,6 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
 
 # TODO
 
-### Pagamento
-    * definir meios de pagamento
-    
-
 ### Consultas
     * Consulta por data
     * Consulta por transações abandonadas
