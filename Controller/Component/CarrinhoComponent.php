@@ -8,8 +8,8 @@
 * @author Andre Cardoso <andrecardosodev@gmail.com>
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
-* @license MIT License (http://www.opensource.org/licenses/mit-license.php)
-* @version 1.0
+* @license MIT (http://opensource.org/licenses/MIT)
+* @version 1.1
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html
 * 

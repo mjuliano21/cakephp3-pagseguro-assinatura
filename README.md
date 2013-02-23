@@ -88,7 +88,7 @@ caso já possua mais componentes faça-o da seguinte forma
 Para a realização de uma requisição simples, contendo somente os dados do comprador, 
 meio de entrega não definido, não definido tipo de pagamento e valores adicionais siga o modelo abaixo.
 
-No controller que fará o processamento dos itens comprados pelo usuário faça assim:
+No controller que fará o processamento dos itens comprados pelo usuário deverá se parecer com o exemplo abaixo:
 
 ```php
 	<?php
@@ -102,6 +102,16 @@ No controller que fará o processamento dos itens comprados pelo usuário faça 
 
         // definindo a referência da compra (opcional)
         $this->Carrinho->setReferencia(25);
+
+        /**
+        *   adicionarItem method
+        *   @param int id  
+        *   @param string descricao 
+        *   @param string valorUnitario (formato 0.00 -> ponto como separador de centavos, e nada separando milhares)
+        *   @param string peso (formato em gramas ex: 1KG = 1000)
+        *   @param int quantidade 
+        */
+
 
         // para adicionar apenas 1 item:
         $this->Carrinho->adicionarItem(1, 'Produto Teste', '25.00', '1000', 1);
@@ -140,12 +150,14 @@ Esta ação é o ideal para tratar o retorno do pagseguro via GET. Atribuindo
 o código em uma variável agora você pode consultar o status da transação.
 No controller que receberá o retorno do PagSeguro você deve primeiramente definir 
 suas credenciais e com o código de retorno chamar o método `obterInformacoesTransacao` do 
-componente `Carrinho`, feito isto basta buscar pelas informações desejadas, sendo elas
-de momento:
+componente `Carrinho`, feito isto basta buscar pelas informações desejadas, sendo elas:
 * Dados do usuário;
 * Status da transação;
 * Dados de pagamento;
-* Data (de origem e última notificação do PagSeguro
+* Data (de origem e última notificação do PagSeguro)
+* Dados dos produtos comprados
+
+As informações acima são idênticas para a API de notificação
 
 
 ```php
@@ -237,7 +249,7 @@ de momento:
                                         'descricao' => 'Produto Teste',
                                         'quantidade' => '1',
                                         'valorUnitario' => '0.01',
-                                        'peso' => 'Produto Teste',
+                                        'peso' => '1000',
                                         'frete' => null
                                 )
                         )
@@ -362,7 +374,7 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
                                 'descricao' => 'Produto Teste',
                                 'quantidade' => '1',
                                 'valorUnitario' => '0.01',
-                                'peso' => 'Produto Teste',
+                                'peso' => '1000',
                                 'frete' => null
                         )
                 )
