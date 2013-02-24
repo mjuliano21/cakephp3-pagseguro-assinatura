@@ -2,8 +2,7 @@
 
 No controller desejado deve ser declarada a utilização do componente `Consulta`
 
-```php public $components = array('demais componentes', 'PagSeguro.Consulta');
-```
+`public $components = array('demais componentes', 'PagSeguro.Consulta');`
 
 ## Consultar transações por código
 
