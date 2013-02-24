@@ -13,13 +13,13 @@ Não se confunda, o código da transação e da notificação são diferentes pa
 notificação o código se altera.
 
 Modelo recebido pelo Pagseguro:
-`
+```php
     POST http://lojamodelo.com.br/notificacao HTTP/1.1
     Host:pagseguro.uol.com.br
     Content-Length:85
     Content-Type:application/x-www-form-urlencoded
     notificationCode=766B9C-AD4B044B04DA-77742F5FA653-E1AB24
-    notificationType=transaction `
+    notificationType=transaction ```
 
 
 Com tais dados em mãos você deve realizar a requisição das informações da transação.
