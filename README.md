@@ -82,11 +82,11 @@ caso já possua mais componentes faça-o da seguinte forma
 ## UTILIZAÇÃO
 =============
 
-Requisição de pagamento: Leia o arquivo REQUISICAO_PAGAMENTO
-Retorno de requisição de pagamento: Leia o arquivo CONSULTA
-Consulta por código: Leia o arquivo CONSULTA
-Consulta por perído: Leia o arquivo CONSULTA
-Notificações: Leia o arquivo NOTIFICACAO
+* Requisição de pagamento: Leia o arquivo REQUISICAO_PAGAMENTO
+* Retorno de requisição de pagamento: Leia o arquivo CONSULTA
+* Consulta por código: Leia o arquivo CONSULTA
+* Consulta por perído: Leia o arquivo CONSULTA
+* Notificações: Leia o arquivo NOTIFICACAO
 
 ====================
 
