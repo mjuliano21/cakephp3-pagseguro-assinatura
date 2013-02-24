@@ -19,7 +19,8 @@ Modelo recebido pelo Pagseguro:
     Content-Length:85
     Content-Type:application/x-www-form-urlencoded
     notificationCode=766B9C-AD4B044B04DA-77742F5FA653-E1AB24
-    notificationType=transaction ```
+    notificationType=transaction 
+```
 
 
 Com tais dados em mãos você deve realizar a requisição das informações da transação.
