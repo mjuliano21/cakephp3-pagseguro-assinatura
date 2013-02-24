@@ -5,6 +5,10 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
+1.3 - 23/02/2013
+    * Criada possibilidade de consulta por período
+    * Documentação separada por módulos
+
 1.2 - 23/02/2013
     Adicionados tipo de entrega, valor do frete e tipo de pagamento
 

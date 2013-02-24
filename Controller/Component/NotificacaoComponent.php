@@ -9,13 +9,15 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 1.2
+* @version 1.3
+* @since 1.1
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  (https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html)
 * 
 */
 
 App::uses('PagSeguroLibrary', 'Plugin/PagSeguro/Vendor/PagSeguroLibrary');
+App::uses('Codes', 'Plugin/PagSeguro/Vendor');
 
 class NotificacaoComponent extends Component{
     
@@ -113,43 +115,7 @@ class NotificacaoComponent extends Component{
   * @since 1.0
   */   
     public function obterStatusTransacao() {
-        $status = $this->dadosTransacao->getStatus()->getValue();
-        switch($status) {
-           case 1:
-               $statusRetorno['id'] = 1;
-               $statusRetorno['descricao'] = 'Aguardando pagamento';
-               break;
-           case 2:
-               $statusRetorno['id'] = 2;
-               $statusRetorno['descricao'] = 'Em análise';
-               break;
-           case 3:
-               $statusRetorno['id'] = 3;
-               $statusRetorno['descricao'] = 'Paga';
-               break;
-           case 4:
-               $statusRetorno['id'] = 4;
-               $statusRetorno['descricao'] = 'Disponível';
-               break;
-           case 5:
-               $statusRetorno['id'] = 5;
-               $statusRetorno['descricao'] = 'Em disputa';
-               break;
-           case 6:
-               $statusRetorno['id'] = 6;
-               $statusRetorno['descricao'] = 'Devolvida';
-               break;
-           case 7:
-               $statusRetorno['id'] = 7;
-               $statusRetorno['descricao'] = 'Cancelada';
-               break;
-           default:
-               $statusRetorno['id'] = 0;
-               $statusRetorno['descricao'] = 'Não foi possível obter o status';
-               break;
-        }
-        
-        return $statusRetorno;
+        return Codes::obterStatusTransacao($this->dadosTransacao->getStatus()->getValue());
     }
     
     
@@ -160,96 +126,10 @@ class NotificacaoComponent extends Component{
   * @since 1.0
   */   
     public function obterDadosPagamento() {
-        $tipoPagamento = $this->dadosTransacao->getPaymentMethod()->getType()->getValue();
-        $metodoPagamento = $this->dadosTransacao->getPaymentMethod()->getCode()->getValue();
-
-
-        switch($tipoPagamento) {
-            case 1:
-                $dadosPagamento['tipo'] = 'Cartão de crédito';
-                break;
-            case 2:
-                $dadosPagamento['tipo'] = 'Boleto';
-                break;
-            case 3:
-                $dadosPagamento['tipo'] = 'Débito online (TEF)';
-                break;
-            case 4:
-                $dadosPagamento['tipo'] = 'Saldo PagSeguro';
-                break;
-            case 5:
-                $dadosPagamento['tipo'] = 'Oi Paggo';
-                break;
-            default:
-                $dadosPagamento['tipo'] = 'Informação não disponível';
-                break;
-        }
-
-        switch($metodoPagamento) {
-            case 101:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Visa';
-                break;
-            case 102:
-                $dadosPagamento['metodo'] = 'Cartão de crédito MasterCard';
-                break;
-            case 103:
-                $dadosPagamento['metodo'] = 'Cartão de crédito American Express';
-                break;
-            case 104:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Dinners';
-                break;
-            case 105:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Hypercard';
-                break;
-            case 106:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Aura';
-                break;
-            case 107:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Elo';
-                break;
-            case 108:
-                $dadosPagamento['metodo'] = 'Cartão de crédito PLENOCard';
-                break;
-            case 109:
-                $dadosPagamento['metodo'] = 'Cartão de crédito PersonalCard';
-                break;
-            case 110:
-                $dadosPagamento['metodo'] = 'Cartão de crédito JCB';
-                break;
-            case 111:
-                $dadosPagamento['metodo'] = 'Cartão de crédito Discover';
-                break;
-            case 112:
-                $dadosPagamento['metodo'] = 'Cartão de crédito BrasilCard';
-                break;
-            case 113:
-                $dadosPagamento['metodo'] = 'Cartão de crédito FORTBRASIL';
-                break;
-            case 202:
-                $dadosPagamento['metodo'] = 'Boleto Santander';
-                break;
-            case 301:
-                $dadosPagamento['metodo'] = 'Débito Online Bradesco';
-                break;
-            case 302:
-                $dadosPagamento['metodo'] = 'Débito Online Itaú';
-                break;
-            case 304:
-                $dadosPagamento['metodo'] = 'Débito Online Banco do Brasil';
-                break;
-            case 306:
-                $dadosPagamento['metodo'] = 'Débito Online Banrisul';
-                break;
-            case 307:
-                $dadosPagamento['metodo'] = 'Débito Online HSBC';
-                break;
-            case 401:
-                $dadosPagamento['metodo'] = 'Saldo PagSeguro';
-                break;
-            case 501:
-                $dadosPagamento['metodo'] = 'Oi Paggo';
-                break;
-        }
+        $dadosPagamento = array(
+            'tipo' => Codes::obterTipoPagamento($this->dadosTransacao->getPaymentMethod()->getType()->getValue()),
+            'metodo' => Codes::obterMeioPagamento($this->dadosTransacao->getPaymentMethod()->getCode()->getValue())
+        );
         
         return $dadosPagamento;
     }
