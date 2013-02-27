@@ -89,18 +89,3 @@ caso já possua mais componentes faça-o da seguinte forma
 * Notificações: Leia o arquivo NOTIFICACAO
 
 ====================
-
-
-
-# TODO
-
-### Consultas
-    * Consulta por transações abandonadas
-
-
-
-### Testes
-Criar testes
-
-
-Att. Andre Cardoso
