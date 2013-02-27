@@ -86,7 +86,7 @@ caso já possua mais componentes faça-o da seguinte forma
 * Retorno de requisição de pagamento: Leia o arquivo CONSULTA
 * Consulta por código: Leia o arquivo CONSULTA
 * Consulta por perído: Leia o arquivo CONSULTA
-* Consulta por transações abandonadas
+* Consulta por transações abandonadas: Leia o arquivo CONSULTA
 * Notificações: Leia o arquivo NOTIFICACAO
 
 ====================
