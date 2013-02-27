@@ -1,5 +1,5 @@
 # PAGSEGURO PLUGIN
-_v 1.3_
+_v 1.4_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.

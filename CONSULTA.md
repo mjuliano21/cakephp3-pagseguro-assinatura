@@ -161,6 +161,46 @@ automaticamente como 22/01/2013.
     }
 ```
 
+## Consultar por transações abandonadas
+Esta ação serve para consultar todas as transações com status abandonado de um 
+período de tempo de 1 mês. Basta informar a data de fim que o início dar-se-a automaticamente
+1 mês a menos que a data fornecida.
+
+```php
+    if ( $consulta = $this->Consulta->obterTransacoesAbandonadas('2013-02-26') ) {
+        debug($consulta);
+
+        /*
+        array(
+            (int) 0 => array(
+                    'idTransacao' => '4C0EFE17-FB2C-4186-BE93-2D8F381E0F6D',
+                    'referencia' => '25',
+                    'valorTotal' => '0.02',
+                    'desconto' => null,
+                    'valorExtra' => null,
+                    'dataIso' => '2013-02-23T11:02:17.000-03:00',
+                    'dataPtBR' => '23/02/2013 11:02:17',
+                    'ultimaTentativaIso' => null,
+                    'ultimaTentativaPtBR' => '31/12/1969 21:00:00'
+            ),
+            (int) 1 => array(
+                    'idTransacao' => 'BDD76AD4-D886-4EE2-82B0-6EBBC7857252',
+                    'referencia' => '25',
+                    'valorTotal' => '97.30',
+                    'desconto' => null,
+                    'valorExtra' => null,
+                    'dataIso' => '2013-02-23T11:00:47.000-03:00',
+                    'dataPtBR' => '23/02/2013 11:00:47',
+                    'ultimaTentativaIso' => null,
+                    'ultimaTentativaPtBR' => '31/12/1969 21:00:00'
+            ),
+            ...
+        ) 
+        */
+    }
+```
+
+
 ### NOTA
 
 A consulta por período não retorna listagem dos produtos comprados, para isto 

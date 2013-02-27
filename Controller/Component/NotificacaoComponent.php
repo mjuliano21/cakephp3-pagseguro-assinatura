@@ -9,7 +9,7 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 1.3
+* @version 1.4
 * @since 1.1
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  (https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html)

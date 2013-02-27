@@ -9,7 +9,7 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 1.3
+* @version 1.4
 * @since 1.3 
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html
@@ -79,6 +79,32 @@ class ConsultaComponent extends Component{
     }
     
     
+/**
+  * Inicia a consulta por transações abandonadas em um período de 1 mês
+  * 
+  * @param string $dataInicial (YYYY-mm-dd)
+  * @param string $dataFinal (YYYY-mm-dd)
+  * @param int $pagina
+  * @param int $quantidadeMaximaRegistros
+  * @return boolean
+  * @since 1.4
+  */   
+    public function obterTransacoesAbandonadas($dataFinal, $pagina = 1, $quantidadeMaximaRegistros = 30) {
+        $dataInicial = date('Y-m-d',  strtotime($dataFinal.'-1month '));
+        $dataInicial .= 'T00:01';
+        $dataFinal .= 'T23:59';
+        
+        try {
+            if ( $result = $this->transacoes = PagSeguroTransactionSearchService::searchAbandoned($this->credenciais, $pagina, $quantidadeMaximaRegistros, $dataInicial, $dataFinal) ) {
+                return $this->__montarDetalhesTransacoesAbandonadas($result);
+            }
+        } catch (PagSeguroServiceException $e) {
+            echo $e->getMessage();
+            exit();
+        }
+    }
+    
+    
     private function __montarDetalhesTransacoes(PagSeguroTransactionSearchResult $result){
         $dadosTransacao = array();
         foreach($result->getTransactions() as $transacoes) {
@@ -91,6 +117,26 @@ class ConsultaComponent extends Component{
                 'desconto' => $transacoes->getDiscountAmount(),
                 'valorExtra' => $transacoes->getExtraAmount(),
                 'tipoPagamento' => Codes::obterTipoPagamento($transacoes->getPaymentMethod()->getType()->getValue()),
+                'dataIso' => $transacoes->getDate(),
+                'dataPtBR' => date('d/m/Y H:i:s', strtotime($transacoes->getDate())),
+                'ultimaTentativaIso' => $transacoes->getLastEventDate(), 
+                'ultimaTentativaPtBR' => date('d/m/Y H:i:s', strtotime($transacoes->getLastEventDate())),
+                
+            );
+        }
+        return $dadosTransacao;
+    }
+    
+    
+    private function __montarDetalhesTransacoesAbandonadas(PagSeguroTransactionSearchResult $result){
+        $dadosTransacao = array();
+        foreach($result->getTransactions() as $transacoes) {
+            $dadosTransacao[] = array(
+                'idTransacao' => $transacoes->getCode(),
+                'referencia' => $transacoes->getReference(),
+                'valorTotal' => $transacoes->getGrossAmount(),
+                'desconto' => $transacoes->getDiscountAmount(),
+                'valorExtra' => $transacoes->getExtraAmount(),
                 'dataIso' => $transacoes->getDate(),
                 'dataPtBR' => date('d/m/Y H:i:s', strtotime($transacoes->getDate())),
                 'ultimaTentativaIso' => $transacoes->getLastEventDate(), 
