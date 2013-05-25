@@ -171,6 +171,7 @@ class NotificacaoComponent extends Component{
         }
         
         $dados = array(
+            'referencia' => $this->dadosTransacao->getReference(),
             'valorTotal' => $this->dadosTransacao->getGrossAmount(),
             'descontoAplicado' => $this->dadosTransacao->getDiscountAmount(),
             'valorExtra' => $this->dadosTransacao->getExtraAmount(),

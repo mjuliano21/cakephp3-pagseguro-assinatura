@@ -5,6 +5,15 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
+1.4.1 - 30/04/2013
+    * Adicionada referência de compra na notificação
+
+1.4.1 - 03/04/2013
+    * Adicionada referência da compra na consulta
+
+1.4.1 - 18/03/2013
+    * Alterada codificação padrão do XML parser para Utf8
+
 1.4 - 26/02/2013
     * Criada possibilidade de consulta por transações abandonadas
 
