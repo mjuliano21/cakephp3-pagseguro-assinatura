@@ -76,47 +76,35 @@ class Codes {
   * @return array
   * @since 1.2
   */   
-    public static function obterStatusTransacao($codigo, $tipoRetorno = 'array') {
+    public static function obterStatusTransacao($codigo) {
             switch($codigo) {
                case 1:
-                   $statusRetorno['id'] = 1;
-                   $statusRetorno['descricao'] = 'Aguardando pagamento';
+                   $statusRetorno = array('id' => 1, 'descricao' => 'Aguardando pagamento');
                    break;
                case 2:
-                   $statusRetorno['id'] = 2;
-                   $statusRetorno['descricao'] = 'Em análise';
+                   $statusRetorno = array('id' => 2, 'descricao' => 'Em análise');
                    break;
                case 3:
-                   $statusRetorno['id'] = 3;
-                   $statusRetorno['descricao'] = 'Paga';
+                   $statusRetorno = array('id' => 3, 'descricao' => 'Paga');
                    break;
                case 4:
-                   $statusRetorno['id'] = 4;
-                   $statusRetorno['descricao'] = 'Disponível';
+                   $statusRetorno = array('id' => 4, 'descricao' => 'Disponível');
                    break;
                case 5:
-                   $statusRetorno['id'] = 5;
-                   $statusRetorno['descricao'] = 'Em disputa';
+                   $statusRetorno = array('id' => 5, 'descricao' => 'Em disputa');
                    break;
                case 6:
-                   $statusRetorno['id'] = 6;
-                   $statusRetorno['descricao'] = 'Devolvida';
+                   $statusRetorno = array('id' => 6, 'descricao' => 'Devolvida');
                    break;
                case 7:
-                   $statusRetorno['id'] = 7;
-                   $statusRetorno['descricao'] = 'Cancelada';
+                   $statusRetorno = array('id' => 7, 'descricao' => 'Cancelada');
                    break;
                default:
-                   $statusRetorno['id'] = 0;
-                   $statusRetorno['descricao'] = 'Não foi possível obter o status';
+                   $statusRetorno = array('id' => 0, 'descricao' => 'Não foi possível obter o status');
                    break;
             }
 
-            if ($tipoRetorno == 'array') {
-                return $statusRetorno;
-            } else {
-                return $statusRetorno['descricao'];
-            }
+            return $statusRetorno;
     }
     
     
