@@ -76,7 +76,7 @@ class Codes {
   * @return array
   * @since 1.2
   */   
-    public static function obterStatusTransacao($codigo) {
+    public static function obterStatusTransacao($codigo, $tipoRetorno = '') {
             switch($codigo) {
                case 1:
                    $statusRetorno = array('id' => 1, 'descricao' => 'Aguardando pagamento');
@@ -104,7 +104,11 @@ class Codes {
                    break;
             }
 
-            return $statusRetorno;
+            if (is_array($tipoRetorno)) {
+                return $statusRetorno;
+            } else {
+                return $statusRetorno['descricao'];
+            }
     }
     
     
