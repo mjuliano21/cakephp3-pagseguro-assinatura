@@ -1,0 +1,5 @@
+{
+    "require": {
+        "andrebian/cake-plugin-pagseguro": "1.*"
+    }
+}
