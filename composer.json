@@ -1,6 +1,6 @@
 {
     "name": "andrebian/cake-plugin-pagseguro",
-    "description": "Cake Plugin PagSeguro",
+    "description": "CakePHP PagSeguro",
     "type": "cakephp-plugin",
     "keywords": [
         "cakephp",
@@ -11,5 +11,5 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.3"
-    }      
+    }        
 }
