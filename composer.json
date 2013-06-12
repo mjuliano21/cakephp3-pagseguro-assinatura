@@ -10,6 +10,6 @@
     "homepage": "https://github.com/andrebian/cake-plugin-pagseguro",
     "license": "MIT",
     "require": {
-        "php": ">=5.3.*"
+        "php": ">=5.3.3"
     }      
 }
