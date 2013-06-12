@@ -1,5 +1,5 @@
 {
-    "name": "andrebian/cake-plugin-pagseguro",
+    "name": "andrebian/pag_seguro",
     "description": "CakePHP PagSeguro",
     "type": "cakephp-plugin",
     "keywords": [
