@@ -5,11 +5,19 @@
     "keywords": [
         "cakephp",
         "pagseguro",
-        "api-pagamentos"
+        "pagamentos"
     ],
+    "authors": [
+        {
+            "name": "Andre Cardoso",
+            "homepage": "http://andrebian.com",
+            "role": "Author"
+        }
+    ],        
     "homepage": "https://github.com/andrebian/cake-plugin-pagseguro",
     "license": "MIT",
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "composer/installers": "*"        
     }        
 }
