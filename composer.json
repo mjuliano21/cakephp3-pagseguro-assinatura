@@ -1,7 +1,7 @@
 {
     "name": "andrebian/cake-plugin-pagseguro",
     "description": "Cake Plugin PagSeguro",
-    "type": "plugin",
+    "type": "cakephp-plugin",
     "keywords": [
         "cakephp",
         "pagseguro",
