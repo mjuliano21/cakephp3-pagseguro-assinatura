@@ -1,5 +1,16 @@
 {
+    "name": "andrebian/cake-plugin-pagseguro",
+    "description": "Cake Plugin PagSeguro",
+    "type": "plugin",
+    "keywords": [
+        "cakephp",
+        "pagseguro",
+        "api-pagamentos"
+    ],
+    "homepage": "https://github.com/andrebian/cake-plugin-pagseguro",
+    "license": "MIT",
     "require": {
+        "php": ">=5.3.3",
         "andrebian/cake-plugin-pagseguro": "1.*"
-    }
+    },
 }
