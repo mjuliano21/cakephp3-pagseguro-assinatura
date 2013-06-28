@@ -31,6 +31,12 @@ Git
         Altere o nome da pasta de `cake-plugin-pagseguro` para `PagSeguro` e cole-a na pasta `Plugin` de sua aplicação
 
 
+Composer
+    `{
+        "require": {
+            "andrebian/pag_seguro": "dev-master",
+        }
+    }`
 
 ## CONFIGURAÇÕES
 ================
@@ -90,3 +96,8 @@ caso já possua mais componentes faça-o da seguinte forma
 * Notificações: Leia o arquivo NOTIFICACAO
 
 ====================
+
+
+TODO
+
+* Testes
