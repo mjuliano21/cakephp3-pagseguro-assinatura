@@ -32,6 +32,7 @@ Git
 
 
 Composer
+
     `{
         "require": {
             "andrebian/pag_seguro": "dev-master",
