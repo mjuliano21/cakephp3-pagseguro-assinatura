@@ -182,6 +182,16 @@ class NotificacaoComponent extends Component{
     }
     
     
+   /**
+   * 
+   * @return string
+   * @since 1.5
+   */
+    public function obterCodigoTransacao() {
+        return $this->dadosTransacao->getcode();
+    }
+    
+    
     /**
   * 
   * @param string $notificationCode
