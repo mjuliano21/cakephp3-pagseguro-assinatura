@@ -1,5 +1,5 @@
 # PAGSEGURO PLUGIN
-_v 1.5_
+_v 1.5.1_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.
@@ -102,3 +102,9 @@ caso já possua mais componentes faça-o da seguinte forma
 TODO
 
 * Testes
+
+
+PROBLEMAS
+
+Reporte-os por aqui https://github.com/andrebian/cake-plugin-pagseguro/issues?state=open
+

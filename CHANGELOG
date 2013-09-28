@@ -5,6 +5,10 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
+1.5.1 - 28/09/2013
+    * Corrigido retorno de peso de itens adquiridos. Anteriormente era a descrição do
+        item que era trazida ao invés do peso
+
 1.5 - 02/07/2013
     * Adicionado retorno do código da transação ao receber notificação
 
