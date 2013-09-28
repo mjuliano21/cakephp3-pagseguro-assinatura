@@ -363,6 +363,7 @@ class CarrinhoComponent extends Component{
         }
         
         $dados = array(
+            'referencia' => $this->consultaPorCodigo->getReference(),
             'valorTotal' => $this->consultaPorCodigo->getGrossAmount(),
             'descontoAplicado' => $this->consultaPorCodigo->getDiscountAmount(),
             'valorExtra' => $this->consultaPorCodigo->getExtraAmount(),

@@ -5,8 +5,8 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
-1.4.1 - 27/06/2013
-    * Atualizado Readme para instalação via composer
+1.5 - 02/07/2013
+    * Adicionado retorno do código da transação ao receber notificação
 
 1.4.1 - 30/04/2013
     * Adicionada referência de compra na notificação

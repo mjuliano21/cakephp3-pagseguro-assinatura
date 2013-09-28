@@ -45,7 +45,11 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             $dataTransacao = $this->Notificacao->obterDataTransacao();
 
             // retorna os dados de produtos comprados
-            $produtos = $this->Notificacao->obterValores()
+            $produtos = $this->Notificacao->obterValores();
+
+            
+            // retorna o id da transação para consulta e/ou atualização
+            $codigoTransacao = $this->Notificacao->obterCodigoTransacao();
             
 
             // agora exibindo todos os resultados
@@ -116,6 +120,12 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
                         )
                 )
             )
+            */
+
+
+            debug($codigoTransacao);
+            /*
+                '39440128-1FF4-429A-A865-0001D1F18AED';
             */
 
 
