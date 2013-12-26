@@ -64,7 +64,7 @@ class NotificacaoComponent extends Component{
   * @since 1.0
   */   
     public function obterDadosTransacao($tipo, $codigo) {
-                $tipoNotificacao = new PagSeguroNotificationType($tipo);
+        $tipoNotificacao = new PagSeguroNotificationType($tipo);
     		$strTipo = $tipoNotificacao->getTypeFromValue();
                 
                 try{
@@ -161,13 +161,14 @@ class NotificacaoComponent extends Component{
   */   
     public function obterValores() {
         foreach($this->dadosTransacao->getItems() as $item) {
-            $itens[] = array(   'id' => $item->getId(), 
-                                'descricao' => $item->getDescription() , 
-                                'quantidade' => $item->getQuantity(),
-                                'valorUnitario' => $item->getAmount(),
-                                'peso' => $item->getDescription(),
-                                'frete' => $item->getShippingCost()
-                            );
+            $itens[] = array(   
+              'id' => $item->getId(), 
+              'descricao' => $item->getDescription() , 
+              'quantidade' => $item->getQuantity(),
+              'valorUnitario' => $item->getAmount(),
+              'peso' => $item->getDescription(),
+              'frete' => $item->getShippingCost()
+          );
         }
         
         $dados = array(
@@ -175,6 +176,7 @@ class NotificacaoComponent extends Component{
             'valorTotal' => $this->dadosTransacao->getGrossAmount(),
             'descontoAplicado' => $this->dadosTransacao->getDiscountAmount(),
             'valorExtra' => $this->dadosTransacao->getExtraAmount(),
+            'valorTaxa' => $this->consultaPorCodigo->getFeeAmount(),
             'produtos' => $itens,
         );
         
@@ -191,6 +193,15 @@ class NotificacaoComponent extends Component{
         return $this->dadosTransacao->getcode();
     }
     
+   /**
+   * 
+   * @return string
+   * @since 1.0
+   */
+    public function obterReferencia() {
+        return $this->dadosTransacao->getReference();
+    }
+
     
     /**
   * 
