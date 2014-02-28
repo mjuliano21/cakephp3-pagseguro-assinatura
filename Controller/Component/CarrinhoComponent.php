@@ -299,7 +299,7 @@ class CarrinhoComponent extends Component{
         
         return $dadosUsuario;
     }
-    
+
  
  /**
   * Retorna em modo de array o status da transação pesquisada
@@ -308,9 +308,18 @@ class CarrinhoComponent extends Component{
   * @since 1.0
   */   
     public function obterStatusTransacao() {
-        return Codes::obterStatusTransacao($this->consultaPorCodigo->getStatus()->getValue());
+        return Codes::obterStatusTransacao($this->consultaPorCodigo->getStatus()->getValue(), array());
     }
     
+ /**
+  * Retorna em modo de array o status da transação pesquisada
+  * 
+  * @return array
+  * @since 1.0
+  */   
+    public function obterReferencia() {
+        return $this->consultaPorCodigo->getReference();
+    }    
     
  /**
   * Retorna tipo e meio de pagamento
@@ -320,7 +329,9 @@ class CarrinhoComponent extends Component{
   */   
     public function obterDadosPagamento() {
         $dadosPagamento = array(
+            'tipo_id' => $this->consultaPorCodigo->getPaymentMethod()->getType()->getValue(),
             'tipo' => Codes::obterTipoPagamento($this->consultaPorCodigo->getPaymentMethod()->getType()->getValue()),
+            'metodo_id' => $this->consultaPorCodigo->getPaymentMethod()->getCode()->getValue(),
             'metodo' => Codes::obterMeioPagamento($this->consultaPorCodigo->getPaymentMethod()->getCode()->getValue())
         );
         
@@ -353,21 +364,24 @@ class CarrinhoComponent extends Component{
   */   
     public function obterValores() {
         foreach($this->consultaPorCodigo->getItems() as $item) {
-            $itens[] = array(   'id' => $item->getId(), 
-                                'descricao' => $item->getDescription() , 
-                                'quantidade' => $item->getQuantity(),
-                                'valorUnitario' => $item->getAmount(),
-                                'peso' => $item->getWeight(),
-                                'frete' => $item->getShippingCost()
-                            );
+          $itens[] = array(
+            'id' => $item->getId(), 
+            'descricao' => $item->getDescription() , 
+            'quantidade' => $item->getQuantity(),
+            'valorUnitario' => $item->getAmount(),
+            'peso' => $item->getWeight(),
+            'frete' => $item->getShippingCost(),
+
+          );
         }
         
         $dados = array(
-            'referencia' => $this->consultaPorCodigo->getReference(),
-            'valorTotal' => $this->consultaPorCodigo->getGrossAmount(),
-            'descontoAplicado' => $this->consultaPorCodigo->getDiscountAmount(),
-            'valorExtra' => $this->consultaPorCodigo->getExtraAmount(),
-            'produtos' => $itens,
+          'referencia' => $this->consultaPorCodigo->getReference(),
+          'valorTotal' => $this->consultaPorCodigo->getGrossAmount(),
+          'descontoAplicado' => $this->consultaPorCodigo->getDiscountAmount(),
+          'valorExtra' => $this->consultaPorCodigo->getExtraAmount(),
+          'valorTaxa' => $this->consultaPorCodigo->getFeeAmount(),
+          'produtos' => $itens,
         );
         
         return $dados;
