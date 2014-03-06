@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/andrebian/pag_seguro/v/stable.png)](https://packagist.org/packages/andrebian/pag_seguro) [![Total Downloads](https://poser.pugx.org/andrebian/pag_seguro/downloads.png)](https://packagist.org/packages/andrebian/pag_seguro) [![Latest Unstable Version](https://poser.pugx.org/andrebian/pag_seguro/v/unstable.png)](https://packagist.org/packages/andrebian/pag_seguro) [![License](https://poser.pugx.org/andrebian/pag_seguro/license.png)](https://packagist.org/packages/andrebian/pag_seguro)
+
 # PAGSEGURO PLUGIN
 _v 1.5.1_
 
