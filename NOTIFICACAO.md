@@ -57,8 +57,8 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             debug($dadosUsuario);
             /*
             array(
-                'nome' => 'Andre Cardoso',
-                'email' => 'andrecardosodev@gmail.com',
+                'nome' => 'Nome do comprador',
+                'email' => 'email@provedor.com.br',
                 'telefoneCompleto' => '41 00000000',
                 'codigoArea' => '41',
                 'numeroTelefone' => '00000000',
