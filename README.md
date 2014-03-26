@@ -130,7 +130,7 @@ Reporte-os por aqui https://github.com/andrebian/cake-plugin-pagseguro/issues?st
 
 
 ##ATENÇÃO
-Muitos desenvolvedores utilizaram meu email pessoal que estava nos exemplos para realizar compras, peço humildemente que por favor, use SEU email para realizar os testes de compra, já ajudei com o plugin não posso ajudar verificando emails dar reports.
+Muitos desenvolvedores utilizaram meu email pessoal que estava nos exemplos para realizar compras, peço humildemente que por favor, use SEU email para realizar os testes de compra, já ajudei com o plugin não posso ajudar verificando emails e dando reports.
 
 Muito agradecido.
 
