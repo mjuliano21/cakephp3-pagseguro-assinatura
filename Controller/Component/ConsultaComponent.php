@@ -20,17 +20,17 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-App::uses('PagSeguroLibrary', 'Plugin/PagSeguro/Vendor/PagSeguroLibrary');
-App::uses('Codes', 'Plugin/PagSeguro/Vendor');
+require_once ROOT . '/vendor/autoload.php';
+require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
+require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
 
 class ConsultaComponent extends Component{
-    private $loadPagSeguroLibrary = null;
+    
     private $credenciais = null;
     private $transacoes = null;
     
     
     public function startup(\Controller $controller) {
-        $this->loadPagSeguroLibrary = new PagSeguroLibrary;
         
         // definindo alguns dados padrões
         $config = Configure::read('PagSeguro');
