@@ -2,7 +2,7 @@
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8d4bc51766116b27f682121865660505 "githalytics.com")](http://githalytics.com/andrebian/cake-plugin-pagseguro)
 
 # PAGSEGURO PLUGIN
-_v 2_
+_v 2.0.0_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.

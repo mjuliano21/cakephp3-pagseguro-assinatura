@@ -49,7 +49,7 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         }
 
         // definindo o contato do comprador
-        $this->Carrinho->setContatosComprador('Andre Cardoso', 'andrecardosodev@gmail.com', '41', '00000000');
+        $this->Carrinho->setContatosComprador('Nome do comprador', 'email@docomprador.com.br', '41', '00000000');
 
         // definindo o endereço do comprador
         $this->Carrinho->setEnderecoComprador('00000000', 'Rua Teste', '1234', 'Complemento', 'Bairro', 'Cidade', 'UF');

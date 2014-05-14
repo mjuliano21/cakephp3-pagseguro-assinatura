@@ -5,7 +5,7 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
-2 - 14/05/2014
+2.0.0 - 14/05/2014
     * Removida biblioteca do PagSeguro de Vendor - Agora a mesma é carregada com o composer
     * Alterado local da classe de Códigos de status e pagamentos
     * Adicionada possibilidade de definir a URL de notificação da compra
