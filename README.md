@@ -2,15 +2,12 @@
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8d4bc51766116b27f682121865660505 "githalytics.com")](http://githalytics.com/andrebian/cake-plugin-pagseguro)
 
 # PAGSEGURO PLUGIN
-_v 1.5.1_
+_v 2_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.
 O plugin realiza apenas interfaceamento para a API de pagamentos do PagSeguro, com
-isso nem o plugin nem o PagSeguro podem ser responsabilizados por uso em desconformidade
-à documentação fornecida pelo PagSeguro <https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html> 
-assim como valores fornecidos. A responsabilidade das corretas informações ao PagSeguro são
-estritamente do programador que criará a requisição no fechamento do carrinho de compras.
+isso nem o plugin nem o PagSeguro podem ser responsabilizados por uso em desconformidade à documentação fornecida pelo PagSeguro <https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html> assim como valores fornecidos. A responsabilidade das corretas informações ao PagSeguro são estritamente do programador que criará a requisição no fechamento do carrinho de compras.
 
 ____________________
 
@@ -25,28 +22,8 @@ Composer
         }
     }
 
-
-
-Git
-----
-
-Submodulo
-Na raiz de sua aplicação adicione como submodulo: 
-
-    git submodule add git@github.com:andrebian/cake-plugin-pagseguro.git app/Plugin/PagSeguro
-      
-        
-
-Clonando 
-
-    git clone git@github.com:andrebian/cake-plugin-pagseguro
-    
-Altere o nome da pasta de `cake-plugin-pagseguro` para `PagSeguro` e cole-a na pasta `Plugin` de sua aplicação
-
-Zip
-----
-
-Baixe o plugin, descompacte-o na pasta `app/Plugin`, renomeie a pasta `cake-plugin-pagseguro` para `PagSeguro`
+##Atenção
+> Não é mais fornecido suporte para download direto ou utilização como submodulo. Se quiser fazer desta forma faça, mas não prestarei suporte. O suporte dá-se somente em instalações realizadas através do _composer_.
 
 _________________________
 
@@ -106,12 +83,12 @@ Caso já possua mais componentes faça-o da seguinte forma
 ## UTILIZAÇÃO
 
 
-* Requisição de pagamento: Leia o arquivo REQUISICAO_PAGAMENTO
-* Retorno de requisição de pagamento: Leia o arquivo CONSULTA
-* Consulta por código: Leia o arquivo CONSULTA
-* Consulta por perído: Leia o arquivo CONSULTA
-* Consulta por transações abandonadas: Leia o arquivo CONSULTA
-* Notificações: Leia o arquivo NOTIFICACAO
+* Requisição de pagamento: Leia o arquivo [REQUISICAO_PAGAMENTO][1]
+* Retorno de requisição de pagamento: Leia o arquivo [CONSULTA][2]
+* Consulta por código: Leia o arquivo [CONSULTA][3]
+* Consulta por perído: Leia o arquivo [CONSULTA][4]
+* Consulta por transações abandonadas: Leia o arquivo [CONSULTA][5]
+* Notificações: Leia o arquivo [NOTIFICACAO][6]
 
 ______________
 
@@ -136,3 +113,9 @@ Muitos desenvolvedores utilizaram meu email pessoal que estava nos exemplos para
 Muito agradecido.
 
 
+  [1]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/REQUISICAO_PAGAMENTO.md
+  [2]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/CONSULTA.md
+  [3]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/CONSULTA.md
+  [4]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/CONSULTA.md
+  [5]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/CONSULTA.md
+  [6]: https://github.com/andrebian/cake-plugin-pagseguro/blob/master/NOTIFICACAO.md
