@@ -9,17 +9,15 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
 	<?php
 	...
 
-        // definindo suas credenciais
-        $this->Carrinho->setCredenciais('seu email', 'seu token');
-
         // definindo a URL de retorno ao realizar o pagamento (opcional)
         $this->Carrinho->setUrlRetorno('http://andrebian.com');
 
         // definindo a referência da compra (opcional)
-        $this->Carrinho->setReferencia(25);
+        $this->Carrinho->defineReferencia(25);
 
         /**
-        *   adicionarItem method
+        *   Adiciona um produto na lista para o procedimento do checkout
+        *   
         *   @param int id  OBRIGATÓRIO
         *   @param string descricao OBRIGATÓRIO
         *   @param string valorUnitario (formato 0.00 -> ponto como separador 
@@ -29,8 +27,6 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         *   @param string frete (valor do frete formato 0.00 -> ponto como separador
         *       de centavos e nada separando milhares) OPCIONAL
         */
-
-
         // para adicionar apenas 1 item:
         $this->Carrinho->adicionarItem(1, 'Produto Teste', '25.00', '1000', 1);
 
@@ -41,7 +37,7 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         $this->Carrinho->adicionarItem(2, 'Produto Teste 2', '12.40', '1000', 1);
         $this->Carrinho->adicionarItem(3, 'Produto Teste 3', '27.90', '1000', 1);
         
-        // OPção 2:
+        // Opção 2:
         $cont = 1;
         foreach($itensSelecionados as $itens) {
             $this->Carrinho->adicionarItem($cont, $itens['nomeProduto'], $itens['precoProduto'], $itens['precoProduto'], $itens['quantidadeProduto']);
@@ -49,10 +45,33 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         }
 
         // definindo o contato do comprador
-        $this->Carrinho->setContatosComprador('Nome do comprador', 'email@docomprador.com.br', '41', '00000000');
 
+        /**
+        * Define os dados de contato do comprador
+        * 
+        * @param string $nome
+        * @param string $email
+        * @param string $codigoArea
+        * @param string $numeroTelefone
+        */
+        $this->Carrinho->defineContatosComprador('Nome do comprador', 'email@docomprador.com.br', '41', '00000000');
+
+
+        
         // definindo o endereço do comprador
-        $this->Carrinho->setEnderecoComprador('00000000', 'Rua Teste', '1234', 'Complemento', 'Bairro', 'Cidade', 'UF');
+
+        /**
+        * Define o endereço do comprador
+        * 
+        * @param string $cep
+        * @param string $rua
+        * @param string $numero
+        * @param string $complemento
+        * @param string $bairro
+        * @param string $cidade
+        * @param string $uf
+        */
+        $this->Carrinho->defineEnderecoComprador('00000000', 'Rua Teste', '1234', 'Complemento', 'Bairro', 'Cidade', 'UF');
 
         
         /**
@@ -61,7 +80,7 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         *   @param tipoFrete (PAC, SEDEX, NAO_ESPECIFICADO)
         *
         */
-        $this->Carrinho->setTipoFrete('SEDEX');
+        $this->Carrinho->defineTipoFrete(PagSeguroEntrega::TIPO_SEDEX);
 
 
         /**
@@ -71,19 +90,27 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
         *       centavos e nada separando milhares)
         *
         */
-        $this->Carrinho->setValorTotalFrete('32.00');
+        $this->Carrinho->defineValorTotalFrete('32.00');
 
 
         /**
         *   tipoPagamento method OPCIONAL
         *   
-        *   @param string tipoPagamento (CREDIT_CARD, BOLETO, ONLINE_TRANSFER, BALANCE, OI_PAGGO)
+        *   @param string tipoPagamento (CREDIT_CARD, BOLETO, ONLINE_TRANSFER, BALANCE, OI_PAGGO, DIRECT_DEPOSIT)
         *
         */
-        $this->Carrinho->setTipoPagamento('BOLETO');
+        $this->Carrinho->defineTipoPagamento('BOLETO');
 
+        // ou de uma maneira mais elegante e menos passível de falha
+        
+        $this->Carrinho->defineTipoPagamento(
+            PagSeguroTiposPagamento::tipoDePagamentoEmString(
+                PagSeguroTiposPagamento::TIPO_PAGAMENTO_BOLETO
+            )
+        );
+        
 
-        // e finalmente se os dados estivere corretos, redirecionando ao Pagseguro
+        // e finalmente se os dados estiverem corretos, redirecionando ao Pagseguro
         if ($result = $this->Carrinho->finalizaCompra() ) {
             $this->redirect($result);
         }

@@ -24,9 +24,9 @@ require_once ROOT . '/vendor/autoload.php';
 
 App::import('PagSeguro', 'PagSeguroLibrary', array('file' => ROOT . DS . 'vendor' . DS . 'pagseguro' . DS . 'php' . DS . 'source' . DS . 'PagSeguroLibrary' . DS . 'PagSeguroLibrary.php'));
 App::import('Assets', 'PagSeguro.Codes', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Codes.php'));
-App::import('Assets', 'PagSeguro.Dinheiro', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Dinehiro.php'));
-App::import('Assets', 'PagSeguro.Entrega', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Entrega.php'));
-App::import('Assets', 'PagSeguro.Pagamento', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Pagamento.php'));
+App::import('Assets', 'PagSeguro.PagSeguroMoeda', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroMoeda.php'));
+App::import('Assets', 'PagSeguro.PagSeguroEntrega', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroEntrega.php'));
+App::import('Assets', 'PagSeguro.PagSeguroTiposPagamento', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroTiposPagamento.php'));
 
 class CarrinhoComponent extends Component
 {
@@ -60,27 +60,27 @@ class CarrinhoComponent extends Component
         $this->customer = new PagSeguroSender();
         $this->paymentType = new PagSeguroPaymentMethodType();
         
-        $this->credenciais = new PagSeguroAccountCredentials($config['producao']['email'], $config['producao']['token']);
+        $this->credenciais = new PagSeguroAccountCredentials($config['email'], $config['token']);
         
-        $this->paymentRequest->setShippingType(Entrega::TIPO_NAO_ESPECIFICADO);
-        $this->paymentRequest->setCurrency(Dinheiro::BRL);
+        $this->paymentRequest->setShippingType(PagSeguroEntrega::TIPO_NAO_ESPECIFICADO);
+        $this->paymentRequest->setCurrency(PagSeguroMoeda::BRL);
     }
   
     
  /**
-  * Define as credenciais para utilização do PagSeguro
+  * Define as credenciais para utilização do PagSeguro tanto 
+  * em ambiente de produção como de homologação
+  * 
+  * * Para que o ambiente de homologação (sandbox) seja utilizado 
+  * a configuração deve estar presente no bootstrap.php através de 
+  * Configure::write('PagSeguro.isSandbox' , true);
   * 
   * @param string $email
   * @param string $token
   * @since 1.0
   */   
-    public function setCredenciais($email, $token) {
+    public function defineCredenciais($email, $token) {
         $this->credenciais = new PagSeguroAccountCredentials($email, $token);
-    }
-    
-    public function setUrlNotificacoes( $url = null )
-    {
-        $this->paymentRequest->setNotificationURL($url);
     }
     
     
@@ -90,7 +90,7 @@ class CarrinhoComponent extends Component
   * @param string $urlRetorno
   * @since 1.0
   */   
-    public function setUrlRetorno($urlRetorno = null) {
+    public function defineUrlRetorno($urlRetorno = null) {
        $this->paymentRequest->setRedirectURL($urlRetorno); 
     }
     
@@ -101,7 +101,7 @@ class CarrinhoComponent extends Component
   * @param int $id
   * @since 1.0
   */
-    public function setReferencia($id) {
+    public function defineReferencia($id) {
         $this->paymentRequest->setReference($id);
     }
     
@@ -129,7 +129,7 @@ class CarrinhoComponent extends Component
   * @param string $valor (formato 0.00)
   * @since 1.0
   */   
-    public function setValorExtra($valor) {
+    public function adicionarValorExtra($valor) {
         $this->paymentRequest->setExtraAmount($valor);
     }
     
@@ -140,7 +140,7 @@ class CarrinhoComponent extends Component
   * @param int $validade
   * @since 1.0
   */   
-    public function setValidadeRequisicao($validade) {
+    public function defineValidadeRequisicao($validade) {
         $this->paymentRequest->setMaxAge($validade);
     }
     
@@ -152,7 +152,7 @@ class CarrinhoComponent extends Component
   * @param int $quantidade
   * @since 1.0
   */   
-    public function setQuantidadeUso($quantidade) {
+    public function defineQuantidadeUso($quantidade) {
         $this->paymentRequest->setMaxUses($quantidade);
     }
     
@@ -166,7 +166,7 @@ class CarrinhoComponent extends Component
   * @param string $numeroTelefone
   * @since 1.0
   */   
-    public function setContatosComprador($nome, $email, $codigoArea, $numeroTelefone) {
+    public function defineContatosComprador($nome, $email, $codigoArea, $numeroTelefone) {
         $this->paymentRequest->setSender($nome, $email, $codigoArea, $numeroTelefone);
     }
     
@@ -184,7 +184,7 @@ class CarrinhoComponent extends Component
   * @param string $pais Padrão BRA
   * @since 1.0
   */   
-    public function setEnderecoComprador($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais = 'BRA') {
+    public function defineEnderecoComprador($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais = 'BRA') {
         $this->paymentRequest->setShippingAddress($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais);
     }
     
@@ -193,27 +193,11 @@ class CarrinhoComponent extends Component
   * Define o tipo de frete que será efetuado na compra
   * 
   * @param string $tipoFrete 
-  * 1 	Encomenda normal (PAC).
-  * 2 	SEDEX (SEDEX)
-  * 3 	Tipo de frete não especificado (NAO_ESPECIFICADO ou outro qualquer) -> Padrão
   * @since 1.2
   * 
   */   
-    public function setTipoFrete($tipoFrete) {
-        
-        switch ($tipoFrete) {
-            case 'PAC':
-                $tipoEntrega = '1';
-                break;
-            case 'SEDEX':
-                $tipoEntrega = '2';
-                break;
-            default:
-                $tipoEntrega = '3';
-                break;
-        }
-        
-        $this->paymentRequest->setShippingType($tipoEntrega);
+    public function defineTipoFrete($tipoFrete) {
+        $this->paymentRequest->setShippingType($tipoFrete);
     }
     
     
@@ -223,7 +207,7 @@ class CarrinhoComponent extends Component
   * @param string $valorTotalFrete
   * @since 1.2
   */   
-    public function setValorTotalFrete($valorTotalFrete) {
+    public function defineValorTotalFrete($valorTotalFrete) {
         $this->paymentRequest->setShippingCost($valorTotalFrete);
     }
     
@@ -237,7 +221,7 @@ class CarrinhoComponent extends Component
  * @since 1.2
  * 
  */    
-    public function setTipoPagamento($tipoPagamento) {
+    public function defineTipoPagamento($tipoPagamento) {
         $this->paymentType->setByType($tipoPagamento);
     }    
     

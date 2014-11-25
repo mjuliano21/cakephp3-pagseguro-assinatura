@@ -56,16 +56,8 @@ Arquivo bootstrap
 
     
         Configure::write('PagSeguro', array(
-            'producao' => array(
-                'email' => 'email cadastrado',
-                'token' => 'token-gerado',
-            ),
-            'sandbox' => array(
-                'email' => 'email-gerado@sandbox.pagseguro.com.br',
-                'password' => 'senha-gerada',
-                'appID' => 'app-id-gerada',
-                'AppKey' => 'app-key-gerada'
-            ),
+            'email' => 'seu-email-cadastrado@pagseguro',
+            'token' => 'seu-token',
             'isSandbox' => true, // true|false
         ));
         

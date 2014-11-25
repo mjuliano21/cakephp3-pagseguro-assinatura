@@ -23,17 +23,17 @@ class ComprasController extends AppController {
                 $this->Carrinho->adicionarItem(1, 'Produto Teste', '0.01', '1000', 1);
                 $this->Carrinho->adicionarItem(2, 'Produto Teste 2', '12.40', '1000', 1);
                 $this->Carrinho->adicionarItem(3, 'Produto Teste 3', '27.90', '1000', 1);
-                $this->Carrinho->setContatosComprador('nome do comprador', 'email-do-comprador', '41', '99999999');
-                $this->Carrinho->setEnderecoComprador('80000000', 'Rua Teste', '0000', 'Complemento', 'Bairro', 'Cidade', 'UF');
+                $this->Carrinho->defineContatosComprador('nome do comprador', 'email-do-comprador', '41', '99999999');
+                $this->Carrinho->defineEnderecoComprador('80000000', 'Rua Teste', '0000', 'Complemento', 'Bairro', 'Cidade', 'UF');
                 
                 
-                $this->Carrinho->setTipoFrete('SEDEX');
+                $this->Carrinho->defineTipoFrete('SEDEX');
                 
                 // opcional
-                $this->Carrinho->setValorTotalFrete('0.01');
+                $this->Carrinho->defineValorTotalFrete('0.01');
                 
                 
-                $this->Carrinho->setTipoPagamento('BOLETO');
+                $this->Carrinho->defineTipoPagamento('BOLETO');
                 
                 
                 if ($result = $this->Carrinho->finalizaCompra() ) {

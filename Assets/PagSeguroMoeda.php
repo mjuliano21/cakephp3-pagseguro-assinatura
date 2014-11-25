@@ -1,6 +1,6 @@
 <?php
 
-class Dinheiro
+class PagSeguroMoeda
 {
     const BRL = 'BRL';
 }

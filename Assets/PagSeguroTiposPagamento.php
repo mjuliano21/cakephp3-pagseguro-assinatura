@@ -1,21 +1,23 @@
 <?php
 
-class Pagamento
+class PagSeguroTiposPagamento
 {
     const TIPO_PAGAMENTO_CARTAO_DE_CREDITO = 1;
     const TIPO_PAGAMENTO_BOLETO = 2;
     const TIPO_PAGAMENTO_DEBITO_ONLINE = 3;
     const TIPO_PAGAMENTO_SALDO_PAGSEGURO = 4;
     const TIPO_PAGAMENTO_OI_PAGGO = 5;
+    const TIPO_PAGAMENTO_DEPOSITO_DIRETO = 7;
     
-
     public static $tiposPagamento = array(
-        self::TIPO_PAGAMENTO_CARTAO_DE_CREDITO => 'Cartão de crédito',
-        self::TIPO_PAGAMENTO_BOLETO => 'Boleto',
-        self::TIPO_PAGAMENTO_DEBITO_ONLINE => 'Débito online (TEF)',
-        self::TIPO_PAGAMENTO_SALDO_PAGSEGURO => 'Saldo PagSeguro',
-        self::TIPO_PAGAMENTO_OI_PAGGO => 'Oi Paggo'
+        self::TIPO_PAGAMENTO_CARTAO_DE_CREDITO => 'CREDIT_CARD',
+        self::TIPO_PAGAMENTO_BOLETO => 'BOLETO',
+        self::TIPO_PAGAMENTO_DEBITO_ONLINE => 'ONLINE_TRANSFER',
+        self::TIPO_PAGAMENTO_SALDO_PAGSEGURO => 'BALANCE',
+        self::TIPO_PAGAMENTO_OI_PAGGO => 'OI_PAGGO',
+        self::TIPO_PAGAMENTO_DEPOSITO_DIRETO => 'DIRECT_DEPOSIT',
     );
+    
     
     
     public static $meiosPagamento = array(
@@ -41,5 +43,34 @@ class Pagamento
         401 => 'Saldo PagSeguro',
         501 => 'Oi Paggo'
     );
+    
+    /**
+     * @param int $tipo
+     * @return string
+     * @throws NotFoundException
+     */
+    public static function tipoDePagamentoEmString($tipo)
+    {
+        if( array_key_exists($tipo, self::$tiposPagamento) ) {
+            return self::$tiposPagamento[$tipo];
+        }
+        
+        throw new NotFoundException('O tipo de pagamento com ID: ' . $tipo . ' não foi localizado');
+    }
+    
+    /**
+     * 
+     * @param int $id
+     * @return string
+     * @throws NotFoundException
+     */
+    public static function meioPagamentoEmString($id) 
+    {
+        if( array_key_exists($id, self::$meiosPagamento) ) {
+            return self::$meiosPagamento[$id];
+        }
+        
+        throw new NotFoundException('O meio de pagamento com ID: ' . $tipo . ' não foi localizado');
+    }
 
 }

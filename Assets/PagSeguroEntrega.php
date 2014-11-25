@@ -1,6 +1,6 @@
 <?php
 
-class Entrega
+class PagSeguroEntrega
 {
     const TIPO_PAC = 1;
     const TIPO_SEDEX = 2;
