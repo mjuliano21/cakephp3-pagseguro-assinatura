@@ -55,10 +55,18 @@ Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controll
 Arquivo bootstrap
 
     
-        
-        Configure::write('PagSeguro.credenciais', array(
-            'email' => 'email cadastrado',
-            'token' => 'token gerado'
+        Configure::write('PagSeguro', array(
+            'producao' => array(
+                'email' => 'email cadastrado',
+                'token' => 'token-gerado',
+            ),
+            'sandbox' => array(
+                'email' => 'email-gerado@sandbox.pagseguro.com.br',
+                'password' => 'senha-gerada',
+                'appID' => 'app-id-gerada',
+                'AppKey' => 'app-key-gerada'
+            ),
+            'isSandbox' => true, // true|false
         ));
         
 

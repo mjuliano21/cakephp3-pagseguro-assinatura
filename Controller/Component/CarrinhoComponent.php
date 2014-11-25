@@ -21,19 +21,21 @@
 */
 
 require_once ROOT . '/vendor/autoload.php';
-require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
 
-
+App::import('PagSeguro', 'PagSeguroLibrary', array('file' => ROOT . DS . 'vendor' . DS . 'pagseguro' . DS . 'php' . DS . 'source' . DS . 'PagSeguroLibrary' . DS . 'PagSeguroLibrary.php'));
+App::import('Assets', 'PagSeguro.Codes', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Codes.php'));
+App::import('Assets', 'PagSeguro.Dinheiro', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Dinehiro.php'));
+App::import('Assets', 'PagSeguro.Entrega', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Entrega.php'));
+App::import('Assets', 'PagSeguro.Pagamento', array('file' => APP . DS . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Pagamento.php'));
 
 class CarrinhoComponent extends Component
 {
 
     private $credenciais = null;
-    private $montaPagamento = null;
+    private $paymentRequest = null;
     private $consultaPorCodigo = null;
-    private $comprador = null;
-    private $tipoPagamento = null;
+    private $customer = null;
+    private $paymentType = null;
     private $Controller = null;
     
    
@@ -44,19 +46,24 @@ class CarrinhoComponent extends Component
  */    
     public function startup(\Controller $Controller) 
     {
-        // Instanciando classes para gerar o pagamento
-        $this->montaPagamento = new PagSeguroPaymentRequest;
-        $this->comprador = new PagSeguroSender;
-        $this->tipoPagamento = new PagSeguroPaymentMethodType;
-        
-        // definindo alguns dados padrões
         $config = Configure::read('PagSeguro');
-        if ( $config ) {
-            $this->credenciais = new PagSeguroAccountCredentials($config['credenciais']['email'], $config['credenciais']['token']);
+        if( empty($config) ) {
+            throw new RuntimeException('Você precisa definir as configurações básicas do plugin, leia o manual.');
         }
         
-        $this->montaPagamento->setShippingType('3');
-        $this->montaPagamento->setCurrency('BRL');
+        if( isset($config['isSandbox']) && true === $config['isSandbox'] ) {
+            PagSeguroConfig::setEnvironment('sandbox');
+        }
+        
+        // Instanciando classes para gerar o pagamento
+        $this->paymentRequest = new PagSeguroPaymentRequest();
+        $this->customer = new PagSeguroSender();
+        $this->paymentType = new PagSeguroPaymentMethodType();
+        
+        $this->credenciais = new PagSeguroAccountCredentials($config['producao']['email'], $config['producao']['token']);
+        
+        $this->paymentRequest->setShippingType(Entrega::TIPO_NAO_ESPECIFICADO);
+        $this->paymentRequest->setCurrency(Dinheiro::BRL);
     }
   
     
@@ -73,7 +80,7 @@ class CarrinhoComponent extends Component
     
     public function setUrlNotificacoes( $url = null )
     {
-        $this->montaPagamento->setNotificationURL($url);
+        $this->paymentRequest->setNotificationURL($url);
     }
     
     
@@ -84,7 +91,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setUrlRetorno($urlRetorno = null) {
-       $this->montaPagamento->setRedirectURL($urlRetorno); 
+       $this->paymentRequest->setRedirectURL($urlRetorno); 
     }
     
     
@@ -95,7 +102,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */
     public function setReferencia($id) {
-        $this->montaPagamento->setReference($id);
+        $this->paymentRequest->setReference($id);
     }
     
     
@@ -111,7 +118,7 @@ class CarrinhoComponent extends Component
  * @since 1.0
  */
     public function adicionarItem($id, $nomeProduto, $valorUnit, $peso, $quantidade = 1, $frete = null) {
-        $this->montaPagamento->addItem($id, $nomeProduto, $quantidade, $valorUnit, $peso, $frete);
+        $this->paymentRequest->addItem($id, $nomeProduto, $quantidade, $valorUnit, $peso, $frete);
     }
     
     
@@ -123,7 +130,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setValorExtra($valor) {
-        $this->montaPagamento->setExtraAmount($valor);
+        $this->paymentRequest->setExtraAmount($valor);
     }
     
     
@@ -134,7 +141,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setValidadeRequisicao($validade) {
-        $this->montaPagamento->setMaxAge($validade);
+        $this->paymentRequest->setMaxAge($validade);
     }
     
     
@@ -146,7 +153,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setQuantidadeUso($quantidade) {
-        $this->montaPagamento->setMaxUses($quantidade);
+        $this->paymentRequest->setMaxUses($quantidade);
     }
     
     
@@ -160,7 +167,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setContatosComprador($nome, $email, $codigoArea, $numeroTelefone) {
-        $this->montaPagamento->setSender($nome, $email, $codigoArea, $numeroTelefone);
+        $this->paymentRequest->setSender($nome, $email, $codigoArea, $numeroTelefone);
     }
     
     
@@ -178,7 +185,7 @@ class CarrinhoComponent extends Component
   * @since 1.0
   */   
     public function setEnderecoComprador($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais = 'BRA') {
-        $this->montaPagamento->setShippingAddress($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais);
+        $this->paymentRequest->setShippingAddress($cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $pais);
     }
     
     
@@ -206,7 +213,7 @@ class CarrinhoComponent extends Component
                 break;
         }
         
-        $this->montaPagamento->setShippingType($tipoEntrega);
+        $this->paymentRequest->setShippingType($tipoEntrega);
     }
     
     
@@ -217,7 +224,7 @@ class CarrinhoComponent extends Component
   * @since 1.2
   */   
     public function setValorTotalFrete($valorTotalFrete) {
-        $this->montaPagamento->setShippingCost($valorTotalFrete);
+        $this->paymentRequest->setShippingCost($valorTotalFrete);
     }
     
     
@@ -231,7 +238,7 @@ class CarrinhoComponent extends Component
  * 
  */    
     public function setTipoPagamento($tipoPagamento) {
-        $this->tipoPagamento->setByType($tipoPagamento);
+        $this->paymentType->setByType($tipoPagamento);
     }    
     
     
@@ -243,7 +250,7 @@ class CarrinhoComponent extends Component
   */   
     public function finalizaCompra() {
         try {
-            if ($url = $this->montaPagamento->register($this->credenciais) ) {
+            if ($url = $this->paymentRequest->register($this->credenciais) ) {
                 return $url;
             }
         } catch (PagSeguroServiceException $e) {
