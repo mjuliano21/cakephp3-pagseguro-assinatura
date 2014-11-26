@@ -64,13 +64,13 @@ class PagSeguroTiposPagamento
      * @return string
      * @throws NotFoundException
      */
-    public static function meioPagamentoEmString($id) 
+    public static function meioDePagamentoEmString($id) 
     {
         if( array_key_exists($id, self::$meiosPagamento) ) {
             return self::$meiosPagamento[$id];
         }
         
-        throw new NotFoundException('O meio de pagamento com ID: ' . $tipo . ' não foi localizado');
+        throw new NotFoundException('O meio de pagamento com ID: ' . $id . ' não foi localizado');
     }
 
 }

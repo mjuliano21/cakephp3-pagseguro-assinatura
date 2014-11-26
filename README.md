@@ -2,7 +2,7 @@
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8d4bc51766116b27f682121865660505 "githalytics.com")](http://githalytics.com/andrebian/cake-plugin-pagseguro)
 
 # PAGSEGURO PLUGIN
-_v 2_
+_v 2.0.3_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.
@@ -15,23 +15,25 @@ ____________________
 
 Composer
 ---------------
-
-    {
-        "require": {
-            "andrebian/pag_seguro": "dev-master"
-        }
+```json
+{
+    "require": {
+        "andrebian/pag_seguro": "dev-master"
     }
-
+}
+```
 Ou se preferir uma versão em específico:
 
-    {
-        "require": {
-            "andrebian/pag_seguro": "2.0.0"
-        }
+```json
+{
+    "require": {
+        "andrebian/pag_seguro": "2.0.0"
     }
+}
+```
 
 ##Atenção
-> Não é mais fornecido suporte para download direto ou utilização como submodulo. Se quiser fazer desta forma faça, mas não prestarei suporte. O suporte dá-se somente em instalações realizadas através do _composer_.
+> Não é mais fornecido suporte para download direto ou utilização como submodulo. Por depender da API oficial do PagSeguro a instalação faz-se de forma correta através do composer. Se quiser fazer desta forma (clone, zip ou submodulo) faça, mas não prestarei suporte pois o único meio que satisfaz todas as dependências é o indicado acima.
 
 _________________________
 
@@ -53,23 +55,19 @@ junto ao PagSeguro.
 Tal configuração pode ser feita de duas formas, via `bootstrap` ou no controller desejado.
 
 Arquivo bootstrap
-
-    
-        Configure::write('PagSeguro', array(
-            'email' => 'seu-email-cadastrado@pagseguro',
-            'token' => 'seu-token',
-            'isSandbox' => true, // true|false
-        ));
-        
+```php
+Configure::write('PagSeguro', array(
+    'email' => 'seu-email-cadastrado@pagseguro',
+    'token' => 'seu-token',
+    'isSandbox' => true, // true|false
+));
+```        
 
 
 Controller qualquer onde será montada a finalização da compra
-
-    $this->carrinho->setCredenciais('email cadastrado', 'token gerado');
-
-
-
-A configuração das credenciais podem ser definidas no `bootstrap` e alteradas caso necessário em qualquer controller.
+```php
+$this->carrinho->defineCredenciais('email cadastrado', 'token gerado');
+```
 
 
 ### Carregando o componente
@@ -78,14 +76,19 @@ A configuração das credenciais podem ser definidas no `bootstrap` e alteradas 
 Agora que você já configurou suas credenciais deve definir no `AppController` ou no controller
 que o componente será utilizado
 
-    public $components = array('PagSeguro.Carrinho');
-
+```php
+public $components = array('PagSeguro.PagSeguro', 'PagSeguro.Checkout');
+```
 
 
 Caso já possua mais componentes faça-o da seguinte forma
 
-    public $components = array('Outros componentes', 'PagSeguro.Carrinho');
+```php
+public $components = array('Outros componentes', 'PagSeguro.PagSeguro', 'PagSeguro.Checkout');
+```
 
+
+**A definição do `'PagSeguro.PagSeguro'` NÃO deve ser ignorada.**
 
 
 ## UTILIZAÇÃO
