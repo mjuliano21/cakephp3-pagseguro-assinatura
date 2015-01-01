@@ -156,7 +156,7 @@ class NotificacaoComponent extends PagSeguroComponent {
     public function obterDataTransacao() {
         return array(
             'data' => $this->dadosTransacao->getDate(),
-            'ultimaTentativa' => $this->dadosTransacao->getLastEventDate()
+            'ultimaAlteracao' => $this->dadosTransacao->getLastEventDate()
         );
     }
     

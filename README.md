@@ -2,7 +2,7 @@
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8d4bc51766116b27f682121865660505 "githalytics.com")](http://githalytics.com/andrebian/cake-plugin-pagseguro)
 
 # PAGSEGURO PLUGIN
-_v 2.0.3_
+_v 2.1_
 
 
 Facilita a integração de pagamentos via PagSeguro em aplicações desenvolvidas com base no CakePHP 2.x.
@@ -28,6 +28,16 @@ Ou se preferir uma versão em específico:
 {
     "require": {
         "andrebian/pag_seguro": "2.0.0"
+    }
+}
+```
+
+Ainda
+
+```json
+{
+    "require": {
+        "andrebian/pag_seguro": "@stable"
     }
 }
 ```
@@ -66,7 +76,7 @@ Configure::write('PagSeguro', array(
 
 Controller qualquer onde será montada a finalização da compra
 ```php
-$this->carrinho->defineCredenciais('email cadastrado', 'token gerado');
+$this->Checkout->defineCredenciais('email cadastrado', 'token gerado');
 ```
 
 
@@ -77,18 +87,18 @@ Agora que você já configurou suas credenciais deve definir no `AppController` 
 que o componente será utilizado
 
 ```php
-public $components = array('PagSeguro.PagSeguro', 'PagSeguro.Checkout');
+public $components = array('PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.Retorno');
 ```
 
 
 Caso já possua mais componentes faça-o da seguinte forma
 
 ```php
-public $components = array('Outros componentes', 'PagSeguro.PagSeguro', 'PagSeguro.Checkout');
+public $components = array('Outros componentes', 'PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.Retorno');
 ```
 
 
-**A definição do `'PagSeguro.PagSeguro'` NÃO deve ser ignorada.**
+**A utilização do `'PagSeguro.PagSeguro'` NÃO deve ser ignorada.**
 
 
 ## UTILIZAÇÃO

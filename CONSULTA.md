@@ -89,10 +89,8 @@ As informações acima são idênticas para a API de notificação
                     debug($dataTransacao);
                     /*
                     array(
-                        'iso' => '2012-11-24T13:14:41.000-02:00',
-                        'ptBr' => '24/11/2012 13:14:41',
-                        'ultimaTentativaIso' => '2012-12-08T07:34:15.000-02:00',
-                        'ultimaTentativaPtBr' => '08/12/2012 07:34:15'
+                        'data' => '2012-11-24T13:14:41.000-02:00',
+                        'ultimaTentativa' => '2012-12-08T07:34:15.000-02:00',
                     )    
                     */
 
@@ -150,10 +148,8 @@ automaticamente como 22/01/2013.
                     'desconto' => '0.00',
                     'valorExtra' => '0.00',
                     'tipoPagamento' => 'Boleto',
-                    'dataIso' => '2013-02-16T19:35:53.000-02:00',
-                    'dataPtBR' => '16/02/2013 19:35:53',
-                    'ultimaTentativaIso' => '2013-02-16T19:36:00.000-02:00',
-                    'ultimaTentativaPtBR' => '16/02/2013 19:36:00'
+                    'data' => '2013-02-16T19:35:53.000-02:00',
+                    'ultimaAlteracao' => '2013-02-16T19:36:00.000-02:00',
             ),
         )
 
@@ -178,10 +174,8 @@ período de tempo de 1 mês. Basta informar a data de fim que o início dar-se-a
                     'valorTotal' => '0.02',
                     'desconto' => null,
                     'valorExtra' => null,
-                    'dataIso' => '2013-02-23T11:02:17.000-03:00',
-                    'dataPtBR' => '23/02/2013 11:02:17',
-                    'ultimaTentativaIso' => null,
-                    'ultimaTentativaPtBR' => '31/12/1969 21:00:00'
+                    'data' => '2013-02-23T11:02:17.000-03:00',
+                    'ultimaAlteracao' => null,
             ),
             (int) 1 => array(
                     'idTransacao' => 'BDD76AD4-D886-4EE2-82B0-6EBBC7857252',
@@ -189,10 +183,8 @@ período de tempo de 1 mês. Basta informar a data de fim que o início dar-se-a
                     'valorTotal' => '97.30',
                     'desconto' => null,
                     'valorExtra' => null,
-                    'dataIso' => '2013-02-23T11:00:47.000-03:00',
-                    'dataPtBR' => '23/02/2013 11:00:47',
-                    'ultimaTentativaIso' => null,
-                    'ultimaTentativaPtBR' => '31/12/1969 21:00:00'
+                    'data' => '2013-02-23T11:00:47.000-03:00',
+                    'ultimaAlteracao' => null,
             ),
             ...
         ) 

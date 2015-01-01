@@ -130,7 +130,7 @@ class RetornoPagSeguroComponent extends PagSeguroComponent {
     public function obterDataTransacao() {
         return array(
             'data' => $this->consultaPorCodigo->getDate(),
-            'ultima_alteracao' => $this->consultaPorCodigo->getLastEventDate()
+            'ultimaAlteracao' => $this->consultaPorCodigo->getLastEventDate()
         );
     }
 
