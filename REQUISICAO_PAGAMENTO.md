@@ -22,7 +22,7 @@ No controller que fará o processamento dos itens comprados pelo usuário dever�
             public function checkout() {
 
                 // definindo a URL de retorno ao realizar o pagamento (opcional)
-                $this->Checkout->setUrlRetorno('http://andrebian.com');
+                $this->Checkout->defineUrlRetorno('http://andrebian.com');
 
                 // definindo a referência da compra (opcional)
                 $this->Checkout->defineReferencia(25);
