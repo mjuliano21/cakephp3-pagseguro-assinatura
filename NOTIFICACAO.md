@@ -86,7 +86,7 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             debug($dadosPagamento);
             /*
             array(
-                'tipo' => 'Boleto',
+                'tipo' => 'BOLETO',
                 'metodo' => 'Boleto Santander'
             )
             */
@@ -95,10 +95,8 @@ No controller/action que receberá tal notificação basta realizar a chamada ao
             debug($dataTransacao);
             /*
             array(
-                'iso' => '2013-02-16T19:35:53.000-02:00',
-                'ptBr' => '16/02/2013 19:35:53',
-                'ultimaTentativaIso' => '2013-02-16T19:36:00.000-02:00',
-                'ultimaTentativaPtBr' => '16/02/2013 19:36:00'
+                'data' => '2013-02-16T19:35:53.000-02:00',
+                'ultimaTentativa' => '2013-02-16T19:36:00.000-02:00'
             )
             */
 

@@ -9,7 +9,7 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 2.0.0
+* @version 2.1
 * @since 1.1
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  (https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html)
@@ -20,7 +20,7 @@ require_once ROOT . '/vendor/autoload.php';
 require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
 require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
 
-class NotificacaoComponent extends Component{
+class NotificacaoComponent extends PagSeguroComponent {
     
     private $credenciais = null;
     private $dadosTransacao = null;
@@ -45,11 +45,25 @@ class NotificacaoComponent extends Component{
 /**
   * Define as credenciais para utilização do PagSeguro
   * 
+  * @deprecated since version 2.1
+  * Use NotificacaoComponent::defineCredenciais para novas chamadas
+  *  
   * @param string $email
   * @param string $token
   * @since 1.0
   */   
     public function setCredenciais($email, $token) {
+        $this->defineCredenciais($email, $token);
+    }
+    
+    /**
+     * Define as credenciais para utilização do PagSeguro
+     * 
+     * @param string $email
+     * @param string $token
+     * @since 2.1
+     */
+    public function defineCredenciais($email, $token) {
         $this->credenciais = new PagSeguroAccountCredentials($email, $token);
     }
     
@@ -68,14 +82,14 @@ class NotificacaoComponent extends Component{
                 
                 try{
                     if ( $strTipo == 'TRANSACTION' ) {
-                        if ( $this->__transactionNotification($codigo) ) {
-                            return true;
-                        }
+                        return $this->obterDadosDeNotificacao($codigo);
                     }
                 } catch (PagSeguroServiceException $e) {
                     echo $e->getMessage();
                     exit();
                 }
+                
+                return false;
     }
     
     
@@ -125,12 +139,10 @@ class NotificacaoComponent extends Component{
   * @since 1.0
   */   
     public function obterDadosPagamento() {
-        $dadosPagamento = array(
-            'tipo' => Codes::obterTipoPagamento($this->dadosTransacao->getPaymentMethod()->getType()->getValue()),
-            'metodo' => Codes::obterMeioPagamento($this->dadosTransacao->getPaymentMethod()->getCode()->getValue())
+        return array(
+            'tipo' => PagSeguroTiposPagamento::tipoDePagamentoEmString($this->dadosTransacao->getPaymentMethod()->getType()->getValue()),
+            'metodo' => PagSeguroTiposPagamento::meioDePagamentoEmString($this->dadosTransacao->getPaymentMethod()->getCode()->getValue()),
         );
-        
-        return $dadosPagamento;
     }
     
     
@@ -142,13 +154,10 @@ class NotificacaoComponent extends Component{
   * @since 1.0
   */   
     public function obterDataTransacao() {
-        $data['iso'] = $this->dadosTransacao->getDate();
-        $data['ptBr'] = date('d/m/Y H:i:s', strtotime($data['iso']));
-        $data['ultimaTentativaIso'] = $this->dadosTransacao->getLastEventDate();
-        $data['ultimaTentativaPtBr'] = date('d/m/Y H:i:s', strtotime($data['ultimaTentativaIso']));
-        
-        return $data;
-        
+        return array(
+            'data' => $this->dadosTransacao->getDate(),
+            'ultimaTentativa' => $this->dadosTransacao->getLastEventDate()
+        );
     }
     
     
@@ -203,22 +212,24 @@ class NotificacaoComponent extends Component{
 
     
     /**
-  * 
-  * @param string $notificationCode
-  * @since 1.0
-  */   
-    private function __transactionNotification($notificationCode) {	
+     * Obtém o status de uma notificação no PagSeguro
+     * 
+     * @param string $notificationCode
+     * @return boolean
+     * @since 1.0
+     */   
+    private function obterDadosDeNotificacao($notificationCode) {	
     	try {
-            if ( $this->dadosTransacao = $transaction = PagSeguroNotificationService::checkTransaction($this->credenciais, $notificationCode) ) {
+            $this->dadosTransacao = $transaction = PagSeguroNotificationService::checkTransaction($this->credenciais, $notificationCode);
+            if ( $this->dadosTransacao ) {
                 return true;
             }
     	} catch (PagSeguroServiceException $e) {
             echo $e->getMessage();
             exit();
     	}
-    	
+        
+    	return false;
     }
     
 }
-
-?>
