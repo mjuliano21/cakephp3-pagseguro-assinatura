@@ -10,8 +10,8 @@
  * @link https://github.com/andrebian/cake-plugin-pagseguro/
  * @authorURI http://andrebian.com
  * @license MIT (http://opensource.org/licenses/MIT)
- * @version 2.0.0
- * @since 1.0 
+ * @version 2.1
+ * @since 2.1
  * 
  * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html
  * 
@@ -20,13 +20,16 @@
  * PLUGIN BASE (ele é responsável por montar o ambiente para realizar as requisições, o que pode ser incômodo caso a URL do PagSeguro altere por exemplo):
  *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
  */
-class RetornoPagSeguroComponent extends PagSeguroComponent
-{
+class RetornoPagSeguroComponent extends PagSeguroComponent {
 
     private $consultaPorCodigo = null;
 
-    public function startup(\Controller $controller)
-    {
+    /**
+     * 
+     * @param \Controller $controller
+     * @since 2.1
+     */
+    public function startup(\Controller $controller) {
         parent::startup($controller);
     }
 
@@ -36,12 +39,12 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * 
      * @param string $idTransacao
      * @return object
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterInformacoesTransacao($idTransacao)
-    {
+    public function obterInformacoesTransacao($idTransacao) {
         try {
-            if ($this->consultaPorCodigo = PagSeguroTransactionSearchService::searchByCode($this->credenciais, $idTransacao)) {
+            $this->consultaPorCodigo = PagSeguroTransactionSearchService::searchByCode($this->credenciais, $idTransacao);
+            if ($this->consultaPorCodigo) {
                 return true;
             }
         } catch (PagSeguroServiceException $e) {
@@ -54,10 +57,9 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * Retorna os dados do usuário após a consulta
      * 
      * @return array
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterDadosUsuario()
-    {
+    public function obterDadosUsuario() {
         $contato = $this->consultaPorCodigo->getSender();
         $endereco = $this->consultaPorCodigo->getShipping()->getAddress();
 
@@ -83,10 +85,9 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * Retorna em modo de array o status da transação pesquisada
      * 
      * @return array
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterStatusTransacao()
-    {
+    public function obterStatusTransacao() {
         return Codes::obterStatusTransacao($this->consultaPorCodigo->getStatus()->getValue(), array());
     }
 
@@ -94,10 +95,9 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * Retorna em modo de array o status da transação pesquisada
      * 
      * @return array
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterReferencia()
-    {
+    public function obterReferencia() {
         return $this->consultaPorCodigo->getReference();
     }
 
@@ -105,10 +105,9 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * Retorna tipo e meio de pagamento
      * 
      * @return array
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterDadosPagamento()
-    {
+    public function obterDadosPagamento() {
         $dadosPagamento = array(
             'tipo_id' => $this->consultaPorCodigo->getPaymentMethod()->getType()->getValue(),
             'tipo' => PagSeguroTiposPagamento::tipoDePagamentoEmString(
@@ -123,13 +122,12 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
 
     /**
      * Retorna um array contendo a data em forma iso para o banco de dados
-     * e em ptBR para exibição somente
+     * e em pt_BR para exibição somente
      * 
      * @return array
-     * @since 1.0
+     * @since 2.1
      */
-    public function obterDataTransacao()
-    {
+    public function obterDataTransacao() {
         return array(
             'data' => $this->consultaPorCodigo->getDate(),
             'ultima_alteracao' => $this->consultaPorCodigo->getLastEventDate()
@@ -140,10 +138,9 @@ class RetornoPagSeguroComponent extends PagSeguroComponent
      * obtervalores method
      * 
      * @return array
-     * @since 1.1
+     * @since 2.1
      */
-    public function obterValores()
-    {
+    public function obterValores() {
         $itensAdquiridos = $this->consultaPorCodigo->getItems();
 
         foreach ($itensAdquiridos as $item) {

@@ -10,8 +10,8 @@
 * @link https://github.com/andrebian/cake-plugin-pagseguro/
 * @authorURI http://andrebian.com
 * @license MIT (http://opensource.org/licenses/MIT)
-* @version 2.0.0
-* @since 1.0 
+* @version 2.1
+* @since 2.1
 * 
 * ESTE PLUGIN UTILIZA A API DO PAGSEGURO, DISPONÍVEL EM  https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-php.html
 * 
@@ -43,13 +43,18 @@ App::import('Assets', 'PagSeguro.PagSeguroEntrega', array('file' => APP . 'Plugi
 App::import('Assets', 'PagSeguro.PagSeguroTiposPagamento', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroTiposPagamento.php'));
 
 
-class PagSeguroComponent extends Component
-{
+class PagSeguroComponent extends Component {
+    
     protected $credenciais = null;
     protected $config;
     
-    public function startup(\Controller $controller) 
-    {
+    /**
+     * 
+     * @param \Controller $controller
+     * @throws RuntimeException
+     * @since 2.1
+     */
+    public function startup(\Controller $controller) {
         $this->config = Configure::read('PagSeguro');
         if( empty($this->config) ) {
             throw new RuntimeException('Você precisa definir as configurações básicas do plugin, leia o manual.');
@@ -60,7 +65,6 @@ class PagSeguroComponent extends Component
         }
         
         $this->credenciais = new PagSeguroAccountCredentials($this->config['email'], $this->config['token']);
-        
     }
    
 }
