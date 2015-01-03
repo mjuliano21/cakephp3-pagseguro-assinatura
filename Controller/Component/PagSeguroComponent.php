@@ -21,7 +21,19 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-if( !is_file(ROOT . '/vendor/autoload.php') &&  !is_file(ROOT . '/vendors/autoload.php') ) {
+$vendorDir = ROOT . DS . 'vendor';
+
+$composerDefinitions = json_decode(file_get_contents(ROOT . DS . 'composer.json'), true);
+
+if( isset($composerDefinitions['config']) 
+    && isset($composerDefinitions['config']['vendor-dir']) 
+    && !empty($composerDefinitions['config']['vendor-dir']) ) {
+  $vendorDir = ROOT . DS . $composerDefinitions['config']['vendor-dir'];
+}
+
+$composerAutoload = $vendorDir . DS . 'autoload.php';
+
+if( !is_file($vendorDir . DS . 'autoload.php') ) {
     die(
             'O autoload.php não está presente, isto quer dizer que o composer pode não estar instalado. Visite https://getcomposer.org
              e saiba mais. Caso o composer esteja instalado pode ser que ele não esteja alocando seus arquivos na pasta "vendor(s)"
@@ -29,12 +41,7 @@ if( !is_file(ROOT . '/vendor/autoload.php') &&  !is_file(ROOT . '/vendors/autolo
     );
 }
 
-$vendor = 'vendor';
-if( !is_file(ROOT . '/vendor/autoload.php') ) {
-    $vendor = 'vendors';
-}
-
-require_once ROOT . DS . $vendor . DS . 'autoload.php';
+require_once $composerAutoload;
 
 App::import('PagSeguro', 'PagSeguroLibrary', array('file' => ROOT . DS . 'vendor' . DS . 'pagseguro' . DS . 'php' . DS . 'source' . DS . 'PagSeguroLibrary' . DS . 'PagSeguroLibrary.php'));
 App::import('Assets', 'PagSeguro.Codes', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Codes.php'));
