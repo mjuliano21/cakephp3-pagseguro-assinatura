@@ -1,6 +1,7 @@
 <?php
 
-    Configure::write('PagSeguro.credenciais', array(
-		  'email' => 'seu-email',
-		  'token' => 'seu-token'
+    Configure::write('PagSeguro', array(
+        'email' => 'seu-email',
+        'token' => 'seu-token',
+        'isSandbox' => true, // true | false
     ));
