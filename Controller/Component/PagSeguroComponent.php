@@ -57,7 +57,7 @@ class PagSeguroComponent extends Component {
     public function startup(\Controller $controller) {
         $this->config = Configure::read('PagSeguro');
         if( empty($this->config) ) {
-            throw new RuntimeException('Você precisa definir as configurações básicas do plugin, leia o manual.');
+            throw new RuntimeException('Você precisa definir as configurações básicas do plugin "PagSeguro", leia o manual.');
         }
         
         if( isset($this->config['isSandbox']) && true === $this->config['isSandbox'] ) {
