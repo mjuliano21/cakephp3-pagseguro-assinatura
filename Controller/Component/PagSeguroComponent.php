@@ -33,7 +33,7 @@ if( isset($composerDefinitions['config'])
 
 $composerAutoload = $vendorDir . DS . 'autoload.php';
 
-if( !is_file($vendorDir . DS . 'autoload.php') ) {
+if( !is_file($composerAutoload) ) {
     die(
             'O autoload.php não está presente, isto quer dizer que o composer pode não estar instalado. Visite https://getcomposer.org
              e saiba mais. Caso o composer esteja instalado pode ser que ele não esteja alocando seus arquivos na pasta "vendor(s)"
