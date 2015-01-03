@@ -37,10 +37,44 @@ Ainda
 ```json
 {
     "require": {
-        "andrebian/pag_seguro": "@stable"
+        "andrebian/pag_seguro": "*"
     }
 }
 ```
+
+##Importantíssimo
+
+Por padrão o CakePHP 2.x utiliza plugins dentro de `app/Plugin/` mas ao instalar diretamente 
+pelo composer o mesmo será instalado na raíz de sua aplicação (Plugin/) e não em app/Plugin/. 
+Para contornar isto existem duas saídas, a primeira é definir diretamente através do seu arquivo 
+`composer.json` e a segunda é informar o novo ponto de acesso à plugins. Ambos serão descritos a seguir.
+
+###Opção 1 - Definindo pelo composer.json
+
+Em seu arquivo`composer.json` informe o seguinte:
+
+```json
+"extra": {
+    "installer-paths": {
+        "app/Plugin/PagSeguro": ["andrebian/pag_seguro"]
+    }
+}
+```
+
+###Opção 2 - Informando no bootstrap.php 
+
+É possível informar no bootstrap.php um novo ponto de acesso à plugins, desta forma o Cake 2.x 
+procurará os plugins nos seguintes endereços: `Plugin/` a `app/Plugin/`.
+
+```php
+App::build(array('Plugin' => array(ROOT . '/Plugin/', ROOT . '/app/Plugin/')));
+```
+
+> Ao seguir esta opção a primeira pode ser ignorada.
+
+
+Para mais informações sobre estas opções leia este post em meu blog e veja ao final que 
+menciono uma issue do Debug Kit onde o @markstory, @ADmad e @ceeram explicam os motivos e estrutura do Cake e sugerem a opção do bootstrap.php: http://www.andrebian.com/cakephp-e-composer/ 
 
 ##Atenção
 > Não é mais fornecido suporte para download direto ou utilização como submodulo. Por depender da API oficial do PagSeguro a instalação faz-se de forma correta através do composer. Se quiser fazer desta forma (clone, zip ou submodulo) faça, mas não prestarei suporte pois o único meio que satisfaz todas as dependências é o indicado acima.
