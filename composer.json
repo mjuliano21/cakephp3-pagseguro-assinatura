@@ -1,7 +1,7 @@
 {
     "name": "andrebian/pag_seguro",
     "description": "CakePHP PagSeguro",
-    "version" : "2.0.0",
+    "version" : "2.1",
     "type": "cakephp-plugin",
     "keywords": [
         "cakephp",
