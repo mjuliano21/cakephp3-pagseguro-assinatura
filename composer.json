@@ -17,7 +17,7 @@
     "homepage": "https://github.com/andrebian/cake-plugin-pagseguro",
     "license": "MIT",
     "require": {
-	"pagseguro/php": "@dev",
+	"pagseguro/php": "dev-master",
         "composer/installers": "*"
     }
 }
