@@ -16,14 +16,18 @@
 * 
 */
 
-require_once ROOT . '/vendor/autoload.php';
-require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
+$basePath = ROOT . DS;
+if (!empty($APP_DIR)) {
+    $basePath .= APP_DIR . DS;
+}
+
+require_once $basePath . 'vendor/autoload.php';
+require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
+require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
 
 class NotificacaoComponent extends PagSeguroComponent {
     
-    private $credenciais = null;
-    private $dadosTransacao = null;
+    protected $dadosTransacao = null;
     
     
  /**
@@ -32,12 +36,6 @@ class NotificacaoComponent extends PagSeguroComponent {
   * @since 1.0
   */   
     public function startup(\Controller $controller) {
-        
-        // definindo alguns dados padrões
-        $config = Configure::read('PagSeguro');
-        if ( $config ) {
-            $this->credenciais = new PagSeguroAccountCredentials($config['credenciais']['email'], $config['credenciais']['token']);
-        }
         parent::startup($controller);
     }
     
@@ -120,6 +118,16 @@ class NotificacaoComponent extends PagSeguroComponent {
         return $dadosUsuario;
     }
     
+        /**
+  * Retorna o id do status da transação pesquisada
+  * 
+  * @return array
+  * @since 1.0
+  */   
+    public function obterIdStatusTransacao() {
+        return $this->dadosTransacao->getStatus()->getValue();
+    }
+    
     
     /**
   * Retorna em modo de array o status da transação pesquisada
@@ -184,7 +192,7 @@ class NotificacaoComponent extends PagSeguroComponent {
             'valorTotal' => $this->dadosTransacao->getGrossAmount(),
             'descontoAplicado' => $this->dadosTransacao->getDiscountAmount(),
             'valorExtra' => $this->dadosTransacao->getExtraAmount(),
-            'valorTaxa' => $this->consultaPorCodigo->getFeeAmount(),
+            'valorTaxa' => $this->dadosTransacao->getFeeAmount(),
             'produtos' => $itens,
         );
         
@@ -220,7 +228,7 @@ class NotificacaoComponent extends PagSeguroComponent {
      */   
     private function obterDadosDeNotificacao($notificationCode) {	
     	try {
-            $this->dadosTransacao = $transaction = PagSeguroNotificationService::checkTransaction($this->credenciais, $notificationCode);
+            $this->dadosTransacao = PagSeguroNotificationService::checkTransaction($this->credenciais, $notificationCode);
             if ( $this->dadosTransacao ) {
                 return true;
             }
@@ -231,5 +239,4 @@ class NotificacaoComponent extends PagSeguroComponent {
         
     	return false;
     }
-    
 }

@@ -20,9 +20,15 @@
  * PLUGIN BASE (enviando dados via POST):
  *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
  */
-require_once ROOT . '/vendor/autoload.php';
-require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
+ 
+$basePath = ROOT . DS;
+if (!empty($APP_DIR)) {
+    $basePath .= APP_DIR . DS;
+}
+
+require_once $basePath . 'vendor/autoload.php';
+require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
+require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
 
 class ConsultaComponent extends Component
 {
