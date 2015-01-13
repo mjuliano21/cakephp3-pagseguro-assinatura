@@ -121,14 +121,14 @@ Agora que você já configurou suas credenciais deve definir no `AppController` 
 que o componente será utilizado
 
 ```php
-public $components = array('PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.Retorno');
+public $components = array('PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.RetornoPagSeguro');
 ```
 
 
 Caso já possua mais componentes faça-o da seguinte forma
 
 ```php
-public $components = array('Outros componentes', 'PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.Retorno');
+public $components = array('Outros componentes', 'PagSeguro.PagSeguro', 'PagSeguro.Checkout', 'PagSeguro.RetornoPagSeguro');
 ```
 
 
