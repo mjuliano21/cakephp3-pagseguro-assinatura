@@ -21,14 +21,19 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-$vendorDir = ROOT . DS . 'vendor';
+$basePath = ROOT . DS;
+if (!empty($APP_DIR)) {
+    $basePath .= APP_DIR . DS;
+}
 
-$composerDefinitions = json_decode(file_get_contents(ROOT . DS . 'composer.json'), true);
+$vendorDir = $basePath . 'vendor';
+
+$composerDefinitions = json_decode(file_get_contents($basePath . 'composer.json'), true);
 
 if( isset($composerDefinitions['config']) 
     && isset($composerDefinitions['config']['vendor-dir']) 
     && !empty($composerDefinitions['config']['vendor-dir']) ) {
-  $vendorDir = ROOT . DS . $composerDefinitions['config']['vendor-dir'];
+  $vendorDir = $basePath . $composerDefinitions['config']['vendor-dir'];
 }
 
 $composerAutoload = $vendorDir . DS . 'autoload.php';
@@ -43,12 +48,11 @@ if( !is_file($composerAutoload) ) {
 
 require_once $composerAutoload;
 
-App::import('PagSeguro', 'PagSeguroLibrary', array('file' => ROOT . DS . 'vendor' . DS . 'pagseguro' . DS . 'php' . DS . 'source' . DS . 'PagSeguroLibrary' . DS . 'PagSeguroLibrary.php'));
+App::import('PagSeguro', 'PagSeguroLibrary', array('file' => $basePath . 'vendor' . DS . 'pagseguro' . DS . 'php' . DS . 'source' . DS . 'PagSeguroLibrary' . DS . 'PagSeguroLibrary.php'));
 App::import('Assets', 'PagSeguro.Codes', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'Codes.php'));
 App::import('Assets', 'PagSeguro.PagSeguroMoeda', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroMoeda.php'));
 App::import('Assets', 'PagSeguro.PagSeguroEntrega', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroEntrega.php'));
 App::import('Assets', 'PagSeguro.PagSeguroTiposPagamento', array('file' => APP . 'Plugin' . DS . 'PagSeguro' . DS . 'Assets' . DS . 'PagSeguroTiposPagamento.php'));
-
 
 class PagSeguroComponent extends Component {
     
@@ -66,7 +70,7 @@ class PagSeguroComponent extends Component {
         if( empty($this->config) ) {
             throw new RuntimeException('Você precisa definir as configurações básicas do plugin "PagSeguro", leia o manual.');
         }
-        
+
         if( isset($this->config['isSandbox']) && true === $this->config['isSandbox'] ) {
             PagSeguroConfig::setEnvironment('sandbox');
         }

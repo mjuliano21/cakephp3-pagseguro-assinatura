@@ -20,16 +20,18 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-require_once ROOT . '/vendor/autoload.php';
-require_once ROOT . '/vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once ROOT . '/app/Plugin/PagSeguro/Assets/Codes.php';
+$basePath = ROOT . DS;
+if (!empty($APP_DIR)) {
+    $basePath .= APP_DIR . DS;
+}
 
+require_once $basePath . 'vendor/autoload.php';
+require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
+require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
 
-
-class CarrinhoComponent extends Component
+class CarrinhoComponent extends PagSeguroComponent
 {
 
-    private $credenciais = null;
     private $montaPagamento = null;
     private $consultaPorCodigo = null;
     private $comprador = null;
@@ -44,16 +46,12 @@ class CarrinhoComponent extends Component
  */    
     public function startup(\Controller $Controller) 
     {
+        parent::startup($controller);
+
         // Instanciando classes para gerar o pagamento
         $this->montaPagamento = new PagSeguroPaymentRequest;
         $this->comprador = new PagSeguroSender;
         $this->tipoPagamento = new PagSeguroPaymentMethodType;
-        
-        // definindo alguns dados padrões
-        $config = Configure::read('PagSeguro');
-        if ( $config ) {
-            $this->credenciais = new PagSeguroAccountCredentials($config['credenciais']['email'], $config['credenciais']['token']);
-        }
         
         $this->montaPagamento->setShippingType('3');
         $this->montaPagamento->setCurrency('BRL');
