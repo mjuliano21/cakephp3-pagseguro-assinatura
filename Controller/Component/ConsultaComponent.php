@@ -21,32 +21,10 @@
  *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
  */
  
-$basePath = ROOT . DS;
-if (!empty($APP_DIR)) {
-    $basePath .= APP_DIR . DS;
-}
-
-require_once $basePath . 'vendor/autoload.php';
-require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
-
-class ConsultaComponent extends Component
+class ConsultaComponent extends PagSeguroComponent
 {
 
-    private $credenciais = null;
     private $transacoes = null;
-
-    public function startup(\Controller $controller)
-    {
-
-        // definindo alguns dados padrões
-        $config = Configure::read('PagSeguro');
-        if ($config) {
-            $this->credenciais = new PagSeguroAccountCredentials($config['credenciais']['email'], $config['credenciais']['token']);
-        }
-
-        parent::startup($controller);
-    }
 
     /**
      * Define as credenciais do vendedor

@@ -20,15 +20,6 @@
 *   https://github.com/ftgoncalves/pagseguro/  de Felipe Theodoro Gonçalves, (http://ftgoncalves.com.br)
 */
 
-$basePath = ROOT . DS;
-if (!empty($APP_DIR)) {
-    $basePath .= APP_DIR . DS;
-}
-
-require_once $basePath . 'vendor/autoload.php';
-require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
-
 class CarrinhoComponent extends PagSeguroComponent
 {
 
@@ -36,7 +27,6 @@ class CarrinhoComponent extends PagSeguroComponent
     private $consultaPorCodigo = null;
     private $comprador = null;
     private $tipoPagamento = null;
-    private $Controller = null;
     
    
 /**
@@ -46,7 +36,7 @@ class CarrinhoComponent extends PagSeguroComponent
  */    
     public function startup(\Controller $Controller) 
     {
-        parent::startup($controller);
+        parent::startup($Controller);
 
         // Instanciando classes para gerar o pagamento
         $this->montaPagamento = new PagSeguroPaymentRequest;

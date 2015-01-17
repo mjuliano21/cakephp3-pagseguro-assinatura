@@ -16,28 +16,9 @@
 * 
 */
 
-$basePath = ROOT . DS;
-if (!empty($APP_DIR)) {
-    $basePath .= APP_DIR . DS;
-}
-
-require_once $basePath . 'vendor/autoload.php';
-require_once $basePath . 'vendor/pagseguro/php/source/PagSeguroLibrary/PagSeguroLibrary.php';
-require_once $basePath . 'Plugin/PagSeguro/Assets/Codes.php';
-
 class NotificacaoComponent extends PagSeguroComponent {
     
     protected $dadosTransacao = null;
-    
-    
- /**
-  * 
-  * @param \Controller $controller
-  * @since 1.0
-  */   
-    public function startup(\Controller $controller) {
-        parent::startup($controller);
-    }
     
     
 /**
