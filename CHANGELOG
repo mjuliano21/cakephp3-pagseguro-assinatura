@@ -5,6 +5,19 @@
 #                       LOG DE ALTERAÇÕES                                      #
 ################################################################################
 
+2.1.2 - 16/01/2015
+    * Corrigidos includes de componentes antigos mesmo que em deprecated
+    * Adicionada como dependência a versão de desenvolvimeto do PagSeguro para que a notificação funcionasse corretamente
+
+2.1.1
+    * Realizadas algumas correções pós ambiente sandbox
+
+2.1 - 02/01/2015
+    * Implementado ambiente sandbox
+    * Novos componentes em pt_BR
+    * componentes antigs marcados como deprecated
+
+
 2.0.0 - 14/05/2014
     * Removida biblioteca do PagSeguro de Vendor - Agora a mesma é carregada com o composer
     * Alterado local da classe de Códigos de status e pagamentos
