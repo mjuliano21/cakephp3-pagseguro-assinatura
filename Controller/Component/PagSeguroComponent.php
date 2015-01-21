@@ -56,8 +56,8 @@ App::import('Assets', 'PagSeguro.PagSeguroTiposPagamento', array('file' => APP .
 
 class PagSeguroComponent extends Component {
     
-    protected $credenciais = null;
-    protected $config;
+    public $credenciais = null;
+    public $config;
     
     /**
      * 
