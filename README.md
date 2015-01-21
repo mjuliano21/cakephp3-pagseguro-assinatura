@@ -42,6 +42,21 @@ Ainda
 }
 ```
 
+##Erro comum
+
+Por depender da versão de desenvolvimento do PagSeguro pode ser necessário marcar a estabilidade mínima dos pacotes 
+a serem instalados.
+
+```json
+{
+    "require": {
+        "andrebian/pag_seguro": "*"
+    },
+    "minimum-stability": "dev"
+}
+```
+
+
 ##Importantíssimo
 
 Por padrão o CakePHP 2.x utiliza plugins dentro de `app/Plugin/` mas ao instalar diretamente 
