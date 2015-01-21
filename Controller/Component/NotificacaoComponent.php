@@ -32,7 +32,7 @@ class NotificacaoComponent extends PagSeguroComponent {
   * @since 1.0
   */   
     public function setCredenciais($email, $token) {
-        $this->defineCredenciais($email, $token);
+        $this->credenciais = new PagSeguroAccountCredentials($email, $token);
     }
     
     /**
